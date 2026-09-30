@@ -21,6 +21,11 @@
   --t-fast:220ms; --t-base:400ms; --t-slow:700ms;
   --container:1200px;
   --r-sm:8px; --r-md:16px; --r-lg:24px; --r-pill:999px;
+  --ease-out:cubic-bezier(.22,1,.36,1);
+  --ease-expo:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.12,.64,1);
+  --micro:140ms; --fast:220ms; --standard:420ms; --smooth:680ms; --cinematic:980ms;
+  --glass-stroke:rgba(255,255,255,.14);
 }
 html[data-theme="dark"]{
   --bg-main:#08111F; --bg-surface:#101C30; --bg-hover:#1A2E4C;
@@ -64,7 +69,7 @@ code{font-family:'JetBrains Mono',monospace;background:var(--bg-hover);padding:1
 #p0-sequence{position:relative;background:var(--bg-main);z-index:10}
 .p0-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;isolation:isolate}
 #tech-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
-.p0-content{position:relative;z-index:5;width:min(1180px,94vw);padding:0 18px;text-align:center;display:flex;flex-direction:column;align-items:center;pointer-events:none;will-change:transform}
+.p0-content{position:relative;z-index:5;width:min(1180px,94vw);padding:0 18px;text-align:center;display:flex;flex-direction:column;align-items:center;pointer-events:auto;user-select:text;will-change:transform}
 .author-name-3d{perspective:1400px}
 .author-name-face{position:relative;display:inline-block;font-size:clamp(3.4rem,9.5vw,8.6rem);line-height:.95;font-weight:900;letter-spacing:-.05em;color:var(--hero-text);text-shadow:var(--hero-shadow);transform-style:preserve-3d;animation:sway 7s ease-in-out infinite alternate}
 @keyframes sway{0%{transform:rotateY(-8deg) rotateX(1deg)}100%{transform:rotateY(8deg) rotateX(-1deg) scale(1.012)}}
@@ -77,8 +82,8 @@ code{font-family:'JetBrains Mono',monospace;background:var(--bg-hover);padding:1
 @keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
 
 /* ===== 04. TASKBAR ===== */
-.taskbar-wrapper{position:fixed;top:16px;left:0;width:100%;z-index:1000;display:flex;justify-content:center;padding:0 20px;opacity:0;pointer-events:none;transition:opacity var(--t-slow)}
-.taskbar-wrapper.visible{opacity:1;pointer-events:auto}
+.taskbar-wrapper{position:fixed;top:16px;left:0;width:100%;z-index:1000;display:flex;justify-content:center;padding:0 20px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--t-slow),visibility var(--t-slow)}
+.taskbar-wrapper.visible{opacity:1;visibility:visible;pointer-events:auto}
 .taskbar{background:var(--bg-glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--border);border-radius:var(--r-pill);padding:8px 16px;display:flex;align-items:center;gap:20px;box-shadow:var(--shadow)}
 .by-huy-badge{display:flex;align-items:center;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;padding:8px 16px;border-radius:var(--r-pill);font-weight:700;font-size:.875rem;cursor:pointer;overflow:hidden;transition:transform var(--t-base) var(--ease-apple),box-shadow var(--t-base)}
 .by-huy-badge .hidden-text{max-width:0;opacity:0;white-space:nowrap;display:inline-block;transition:all var(--t-base) var(--ease-apple)}
@@ -102,8 +107,8 @@ code{font-family:'JetBrains Mono',monospace;background:var(--bg-hover);padding:1
 .btn-primary{background:var(--text);color:var(--text-inv)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(59,130,246,.3)}
 .btn-small{padding:9px 14px;font-size:.85rem}
-.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;position:relative;transition:border-color var(--t-base),box-shadow var(--t-base),translate var(--t-base) var(--ease-apple),background var(--t-base)}
-.card:hover{border-color:var(--border-hover);box-shadow:var(--shadow);translate:0 -4px}
+.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;position:relative;transition:border-color var(--t-base),box-shadow var(--t-base),background var(--t-base)}
+.card:hover{border-color:var(--border-hover);box-shadow:var(--shadow)}
 .badge{display:inline-flex;align-items:center;padding:6px 14px;border-radius:var(--r-pill);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;background:var(--bg-hover);border:1px solid var(--border)}
 
 /* ===== 06. LAYOUT ===== */
@@ -268,14 +273,22 @@ footer{background:var(--bg-surface);padding:80px 0 32px;border-top:1px solid var
   #scrollProgressLabel{display:none}
 }
 
+
+.skill-checklist-intro-note{width:min(920px,100%);margin:18px auto 0;padding:12px 16px;border:1px dashed var(--border);border-radius:14px;background:var(--bg-main);color:var(--text-2);text-align:center;font-size:.92rem;font-weight:700;}
+.skill-board-preview{margin-top:6px;color:var(--text-2);font-size:.9rem;}
+.skill-card-nav{display:flex;justify-content:flex-end;margin-top:4px;padding-top:4px;}
+.skill-back-checklist{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:var(--r-pill);border:1px solid var(--border);background:var(--bg-main);color:var(--cyan);font-weight:800;font-size:.82rem;transition:transform .35s var(--ease-spring),background .2s,border-color .2s;}
+.skill-back-checklist:hover{transform:translateY(-2px);background:var(--bg-hover);border-color:var(--cyan);}
+.skill-back-checklist:active{transform:translateY(0) scale(.98);}
+.skill-board-item.is-complete .skill-board-title strong{color:var(--green);}
+.skill-board-item.is-complete .skill-board-count{color:var(--green);}
+
 /* ===== 15. HERO THEO TỪNG BƯỚC CUỘN ===== */
-:root{--ease-spring:cubic-bezier(.34,1.3,.64,1)}
 .h-item{opacity:0;will-change:transform,opacity,filter}
 .author-name-face{font-size:clamp(3rem,8.5vw,7.6rem)}
 .project-title{margin-top:34px;font-size:clamp(1.8rem,5vw,4.6rem)}
 .p0-meta-row{margin-top:30px}
-.p0-badge{min-height:58px;padding:14px 30px;font-size:clamp(1.05rem,2.6vw,1.7rem)}
-.hero-steps{position:absolute;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:6}
+.hero-steps{position:absolute;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:6;pointer-events:none}
 .hero-steps i{width:6px;height:6px;border-radius:99px;background:var(--text-2);opacity:.4;transition:height .45s var(--ease-spring),background .3s,opacity .3s}
 .hero-steps i.on{height:24px;background:var(--cyan);opacity:1}
 
@@ -290,9 +303,10 @@ html[data-theme="light"] .taskbar{box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
 .dropdown-item:hover{background:transparent}
 .dd-hl{position:absolute;left:12px;right:12px;top:0;height:0;border-radius:var(--r-sm);background:var(--bg-hover);opacity:0;pointer-events:none;z-index:0;transition:transform .35s var(--ease-spring),height .35s var(--ease-spring),opacity .2s}
 .nav-item:hover .nav-dropdown .dropdown-item,.nav-item:focus-within .nav-dropdown .dropdown-item{animation:ddIn .45s var(--ease-apple) both}
-.nav-dropdown .dropdown-item:nth-child(3){animation-delay:40ms}
-.nav-dropdown .dropdown-item:nth-child(4){animation-delay:80ms}
-.nav-dropdown .dropdown-item:nth-child(5){animation-delay:120ms}
+.nav-dropdown .dropdown-item:nth-of-type(2){animation-delay:40ms}
+.nav-dropdown .dropdown-item:nth-of-type(3){animation-delay:80ms}
+.nav-dropdown .dropdown-item:nth-of-type(4){animation-delay:120ms}
+.nav-dropdown .dropdown-item:nth-of-type(5){animation-delay:160ms}
 @keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 
 /* ===== 17. SMART-ANIMATE / HIỆU ỨNG CHUNG ===== */
@@ -349,6 +363,8 @@ body.lang-out main,body.lang-out footer,body.lang-out #p0Content,body.lang-out .
 .hotline{display:inline-flex;align-items:baseline;gap:10px;padding:10px 20px;border-radius:var(--r-pill);background:var(--bg-main);border:1px solid var(--border)}
 .hotline small{color:var(--text-2);font-weight:600}
 .hotline b{font-size:1.7rem;color:var(--cyan)}
+
+.quiz-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--text-2);font-size:.86rem;}
 
 @media (max-width:1100px){.nav-item{padding:8px 10px;font-size:.82rem}.taskbar{gap:12px}}
 @media (max-width:900px){.level-body{grid-template-columns:1fr}.day-strip{grid-template-columns:1fr 1fr}.day-step::after{display:none}}
@@ -469,13 +485,6 @@ body.lang-out main,body.lang-out footer,body.lang-out #p0Content,body.lang-out .
 /* =========================================================
    20. FINAL MOTION SYSTEM — MORPH × APPLE × SMART ANIMATE
    ========================================================= */
-:root{
-  --ease-out:cubic-bezier(.22,1,.36,1);
-  --ease-expo:cubic-bezier(.16,1,.3,1);
-  --ease-spring:cubic-bezier(.34,1.12,.64,1);
-  --micro:140ms; --fast:220ms; --standard:420ms; --smooth:680ms; --cinematic:980ms;
-  --glass-stroke:rgba(255,255,255,.14);
-}
 html{scroll-behavior:smooth;scroll-padding-top:96px;}
 body{min-width:320px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;}
 button,a,input{font:inherit;}
@@ -529,7 +538,7 @@ body.menu-open{overflow:hidden;}
 .nav-item:hover,.nav-item.is-active{transform:translateY(-1px);color:var(--text);}
 .nav-trigger{display:inline-flex;align-items:center;gap:4px;color:inherit;background:none;border:0;padding:0;cursor:pointer;font:inherit;font-weight:inherit;}
 .nav-arrow{font-size:.68em;line-height:1;opacity:.78;display:inline-flex;align-items:center;justify-content:center;transform:translateY(-1px);}
-.nav-arrow::before{content:"⌄";font-family:inherit;font-weight:900;}
+.nav-arrow::before{content:none;}
 .nav-arrow{color:currentColor;}
 .nav-item.has-dropdown:focus-within .nav-trigger{color:var(--text);}
 #navMorphIndicator{will-change:transform,width;opacity:0;background:linear-gradient(135deg,rgba(59,130,246,.16),rgba(34,211,238,.10));border-color:rgba(59,130,246,.22);box-shadow:0 6px 18px rgba(59,130,246,.09),inset 0 1px 0 rgba(255,255,255,.1);transition:transform .62s var(--ease-expo),width .62s var(--ease-expo),opacity .2s var(--ease-out);}
@@ -561,13 +570,33 @@ body.menu-open{overflow:hidden;}
 .reveal.visible{opacity:1;transform:none;filter:none;}
 .grid-cards>.reveal:nth-child(2){transition-delay:60ms;}.grid-cards>.reveal:nth-child(3){transition-delay:120ms;}.grid-cards>.reveal:nth-child(4){transition-delay:180ms;}.grid-cards>.reveal:nth-child(5){transition-delay:240ms;}
 
-/* Checklist progress */
-.skill-overall-progress{width:min(920px,100%);margin:26px auto 0;padding:16px 18px;border:1px solid var(--border);border-radius:18px;background:linear-gradient(135deg,rgba(59,130,246,.07),rgba(34,211,238,.045));box-shadow:inset 0 1px 0 rgba(255,255,255,.08);}
-.skill-overall-head{display:flex;justify-content:space-between;gap:16px;align-items:center;font-weight:800;font-size:.9rem;margin-bottom:10px;}
-#skillProgressLabel{color:var(--cyan);}
-.skill-overall-count{color:var(--text-2);font-family:'JetBrains Mono',monospace;font-size:.78rem;}
-.skill-overall-track{height:8px;border-radius:999px;background:var(--bg-main);overflow:hidden;border:1px solid var(--border);}
-#skillProgressBar{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--green));transition:width .7s var(--ease-expo);}
+
+/* Mục IV — bảng TO-DO tổng hợp, dùng chung 30 checklist hiện có */
+.skill-action-board{width:min(1040px,100%);margin:34px auto 0;padding:24px;border:1px solid var(--border);border-radius:var(--r-lg);background:linear-gradient(135deg,rgba(59,130,246,.055),rgba(34,211,238,.035));box-shadow:inset 0 1px 0 rgba(255,255,255,.08);}
+.skill-action-board-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:18px;}
+.skill-action-board-copy{max-width:760px}.skill-action-board-copy p{margin-top:8px;color:var(--text-2);}
+.skill-action-board-note{margin-top:10px;padding:10px 12px;border-left:3px solid var(--cyan);border-radius:10px;background:var(--bg-main);color:var(--text-2);font-size:.9rem;}
+.skill-board-reset{border:1px solid var(--border);background:var(--bg-surface);color:var(--text);padding:10px 14px;border-radius:var(--r-pill);font-weight:800;transition:transform .45s var(--ease-spring),border-color .2s,background .2s,box-shadow .3s;}
+.skill-board-reset:hover{transform:translateY(-2px);border-color:var(--cyan);background:var(--bg-hover);box-shadow:0 8px 22px rgba(34,211,238,.10);}
+.skill-board-list{display:grid;gap:12px;}
+.skill-board-item{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px 18px;border:1px solid var(--border);border-radius:16px;background:var(--bg-surface);transition:transform .45s var(--ease-spring),border-color .25s,background .25s,box-shadow .35s;}
+.skill-board-item:hover{transform:translateY(-2px);border-color:var(--border-hover);box-shadow:var(--shadow);}
+.skill-board-item.is-complete{border-color:rgba(52,211,153,.45);background:linear-gradient(135deg,rgba(52,211,153,.07),var(--bg-surface));}
+.skill-board-check{width:22px;height:22px;accent-color:var(--green);cursor:pointer;margin-top:2px;}
+.skill-board-check:focus-visible{outline:3px solid rgba(34,211,238,.28);outline-offset:3px;}
+.skill-board-main{min-width:0}.skill-board-title{display:flex;align-items:center;gap:10px;font-weight:800;}
+.skill-board-ico{font-size:1.35rem;line-height:1}.skill-board-title strong{color:var(--text);}
+.skill-board-items{margin:7px 0 0 28px;padding-left:18px;display:grid;gap:4px;list-style:disc;color:var(--text-2);font-size:.92rem;}
+.skill-board-meta{display:flex;flex-direction:column;align-items:flex-end;gap:8px;white-space:nowrap;}
+.skill-board-count{font-family:'JetBrains Mono',monospace;font-size:.78rem;font-weight:800;color:var(--cyan);}
+.skill-board-open{border:1px solid var(--border);background:transparent;color:var(--text-2);padding:7px 10px;border-radius:var(--r-pill);font-size:.78rem;font-weight:800;}
+.skill-board-open:hover{color:var(--text);border-color:var(--cyan);background:var(--bg-hover);}
+.detailed-safety-card.board-focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.16),0 22px 65px rgba(0,0,0,.2);}
+.skill-board-sources{margin-top:18px;padding:14px 16px;border-top:1px solid var(--border);color:var(--text-2);font-size:.85rem;}
+.skill-board-sources strong{color:var(--text)}.skill-board-source-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+.skill-board-source-links a{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid var(--border);border-radius:var(--r-pill);background:var(--bg-main);color:var(--cyan);font-weight:700;}
+.skill-board-source-links a:hover{border-color:var(--cyan);background:var(--bg-hover);}
+@media (max-width:768px){.skill-action-board{padding:18px}.skill-board-item{grid-template-columns:auto 1fr}.skill-board-meta{grid-column:2;align-items:flex-start;flex-direction:row;flex-wrap:wrap;}}
 
 /* Mobile off-canvas */
 .hamburger-btn{display:none;}
@@ -592,8 +621,7 @@ body.menu-open{overflow:hidden;}
 .btn:hover::before{transform:translateX(120%);}
 .scroll-top-btn{will-change:transform,opacity;transition:opacity .35s var(--ease-out),transform .55s var(--ease-expo),background .2s;}
 .scroll-top-btn:hover{transform:translateY(-3px) scale(1.03);}
-section::after{content:"";position:absolute;left:50%;bottom:0;width:min(92%,760px);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,var(--border),transparent);opacity:.55;}
-section:last-of-type::after{display:none;}
+main > section:not(:last-of-type)::after{content:"";position:absolute;left:50%;bottom:0;width:min(92%,760px);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,var(--border),transparent);opacity:.55}
 
 @media (max-width:1100px){
   .taskbar{max-width:96vw;overflow:visible;justify-content:flex-start;}
@@ -612,7 +640,6 @@ section:last-of-type::after{display:none;}
   .author-name-face{font-size:clamp(2.8rem,15vw,5.6rem);}
   .project-title{font-size:clamp(1.8rem,9.5vw,3.3rem);}
   .p0-school-line{font-size:clamp(1rem,5.1vw,1.4rem);min-height:54px;padding:10px 16px;}
-  .skill-overall-head{font-size:.82rem;}
   .card:hover{transform:none;}
   .grid-cards{grid-template-columns:1fr;}
 }
@@ -665,51 +692,51 @@ section:last-of-type::after{display:none;}
     <button type="button" class="by-huy-badge" id="byHuy" aria-label="Về đầu trang" title="Về đầu trang"><span>Website</span><span class="hidden-text">by Huy</span></button>
     <div class="nav-links">
       <span id="navMorphIndicator" aria-hidden="true"></span>
-      <div class="nav-item has-dropdown" data-section-target="tong-quan" aria-haspopup="true" aria-expanded="false">
-        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.overview">Tổng quan</span><span aria-hidden="true">▾</span></button>
-        <div class="nav-dropdown">
+      <div class="nav-item has-dropdown" data-section-target="tong-quan">
+        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-overview"><span data-i18n="nav.overview">Tổng quan</span><span aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown" id="nav-dd-overview">
           <a href="#tong-quan" class="dropdown-item" data-i18n="nav.overview.1">Mục tiêu &amp; Nội dung</a>
           <a href="#bao-mat" class="dropdown-item" style="color:var(--red)" data-i18n="nav.overview.2">Cảnh báo bảo mật</a>
         </div>
       </div>
-      <div class="nav-item has-dropdown" data-section-target="tin-gia-la-gi" aria-haspopup="true" aria-expanded="false">
-        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.recognition">Nhận diện</span><span aria-hidden="true">▾</span></button>
-        <div class="nav-dropdown">
+      <div class="nav-item has-dropdown" data-section-target="tin-gia-la-gi">
+        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-recognition"><span data-i18n="nav.recognition">Nhận diện</span><span aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown" id="nav-dd-recognition">
           <a href="#tin-gia-la-gi" class="dropdown-item" data-i18n="nav.rec.1">Tin giả là gì?</a>
           <a href="#5-dau-hieu" class="dropdown-item" data-i18n="nav.rec.2">5 Dấu hiệu nhận biết</a>
           <a href="#6-cau-hoi" class="dropdown-item" data-i18n="nav.rec.3">6 Câu hỏi kiểm chứng</a>
           <a href="#phieu-kiem-chung" class="dropdown-item" data-i18n="nav.rec.4">Phiếu kiểm chứng</a>
         </div>
       </div>
-      <div class="nav-item has-dropdown" data-section-target="ky-nang-an-toan" aria-haspopup="true" aria-expanded="false">
-        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.safety">An toàn thiết yếu</span><span aria-hidden="true">▾</span></button>
-        <div class="nav-dropdown">
+      <div class="nav-item has-dropdown" data-section-target="ky-nang-an-toan">
+        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-safety"><span data-i18n="nav.safety">An toàn thiết yếu</span><span aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown" id="nav-dd-safety">
           <a href="#ky-nang-an-toan" class="dropdown-item" data-i18n="nav.safety.1">Mật khẩu, phishing &amp; tài khoản</a>
           <a href="#ai-media" class="dropdown-item" data-i18n="nav.safety.2">Ảnh/video &amp; AI</a>
           <a href="#dung-kiem-tra" class="dropdown-item" data-i18n="nav.safety.3">DỪNG – KIỂM TRA – BẢO VỆ</a>
         </div>
       </div>
-      <div class="nav-item has-dropdown" data-section-target="checklist-cap-hoc" aria-haspopup="true" aria-expanded="false">
-        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.checklist">Cấp học</span><span aria-hidden="true">▾</span></button>
-        <div class="nav-dropdown">
+      <div class="nav-item has-dropdown" data-section-target="checklist-cap-hoc">
+        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-level"><span data-i18n="nav.checklist">Cấp học</span><span aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown" id="nav-dd-level">
           <a href="#checklist-cap-hoc" class="dropdown-item" data-i18n="nav.checklist.1">Checklist an toàn mạng</a>
           <a href="#thoi-quen" class="dropdown-item" data-i18n="nav.checklist.2">Thói quen hằng ngày</a>
         </div>
       </div>
-      <div class="nav-item has-dropdown" data-section-target="ai-trach-nhiem" aria-haspopup="true" aria-expanded="false">
-        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false">
+      <div class="nav-item has-dropdown" data-section-target="ai-trach-nhiem">
+        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-ai">
           <span data-i18n="nav.ai">AI Trách nhiệm</span>
-          <i class="nav-arrow" aria-hidden="true"></i>
+          <span class="nav-arrow" aria-hidden="true">▾</span>
         </button>
-        <div class="nav-dropdown" role="menu">
+        <div class="nav-dropdown" id="nav-dd-ai" role="menu">
           <a href="#4-khong" class="dropdown-item" role="menuitem" data-i18n="nav.ai.1">Nguyên tắc 4 Không</a>
           <a href="#6-buoc-ai" class="dropdown-item" role="menuitem" data-i18n="nav.ai.2">Quy trình 6 bước</a>
         </div>
       </div>
       <a href="#quiz" class="nav-item" data-section-target="quiz" data-i18n="nav.quiz">Quiz</a>
-      <div class="nav-item has-dropdown" data-section-target="nhat-ky" aria-haspopup="true" aria-expanded="false">
-        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.project">Dự án</span><span aria-hidden="true">▾</span></button>
-        <div class="nav-dropdown">
+      <div class="nav-item has-dropdown" data-section-target="nhat-ky">
+        <button type="button" class="nav-trigger" aria-haspopup="true" aria-expanded="false" aria-controls="nav-dd-project"><span data-i18n="nav.project">Dự án</span><span aria-hidden="true">▾</span></button>
+        <div class="nav-dropdown" id="nav-dd-project">
           <a href="#nhat-ky" class="dropdown-item" data-i18n="nav.proj.1">Nhật ký dự án</a>
           <a href="#minh-bach" class="dropdown-item" data-i18n="nav.proj.2">Minh bạch AI</a>
           <a href="#cam-ket" class="dropdown-item" data-i18n="nav.proj.3">Cam kết</a>
@@ -869,10 +896,7 @@ section:last-of-type::after{display:none;}
       <h2 class="h2" style="margin-top:16px" data-i18n="sec.safety.title">IV. Kỹ năng an toàn mạng thiết yếu</h2>
       <p class="body-large" data-i18n="sec.safety.sub">Nhận diện tin giả chỉ là một phần của an toàn trên Internet. Các kỹ năng dưới đây tập trung vào tài khoản, quyền riêng tư, bắt nạt qua mạng, duyệt web, quyền ứng dụng, mạng xã hội, thiết bị, nguồn tin, kiểm chứng, tin giả, AI/deepfake và kiến thức pháp lý – đạo đức.</p>
       <div class="safety-instruction"><span>👆</span> <span data-i18n="safety.hint">Bấm vào từng mục để mở toàn bộ nội dung chi tiết.</span></div>
-      <div class="skill-overall-progress reveal" aria-live="polite">
-        <div class="skill-overall-head"><span id="skillProgressLabel">Progress: 0%</span><span class="skill-overall-count" id="skillProgressCount">0/30</span></div>
-        <div class="skill-overall-track"><span id="skillProgressBar"></span></div>
-      </div>
+      <div class="skill-checklist-intro-note" data-i18n="safety.todo.headerNote">Checklist thực hành 12 kỹ năng nằm ngay bên dưới 12 thẻ. Tick/bỏ tick theo tiến độ của em.</div>
     </div>
 
     <div class="subsection-heading reveal">
@@ -900,6 +924,10 @@ section:last-of-type::after{display:none;}
           <div class="skill-scenario"><strong>Tình huống:</strong> Một người tự xưng là bạn cùng lớp nhắn: “Cho mình mật khẩu để mình đăng nhập thử cho vui.” <strong>Không đưa mật khẩu.</strong> Mật khẩu là thông tin riêng tư, không phải bằng chứng của tình bạn.</div>
           <div class="skill-activity"><div class="skill-mini-title"><span class="dot"></span>Hoạt động/Infographic</div><p>Trò chơi <strong>“Ghép mật khẩu mạnh”</strong>: các nhóm ghép mảnh từ/ký tự để tạo mật khẩu an toàn mà không dùng thông tin dễ đoán về bản thân. Infographic <strong>“Quy tắc 4K của mật khẩu”</strong>: Khắc – không lưu mật khẩu công khai; Khảo – kiểm tra độ mạnh; Kiêng – không chia sẻ; Kíp – thay đổi khi nghi bị lộ.</p></div>
           <div class="skill-danger"><strong>Không nên:</strong> đăng mật khẩu lên ảnh chụp màn hình, gửi qua nhóm lớp, dùng tên/ngày sinh làm mật khẩu hoặc để trình duyệt lưu mật khẩu trên máy tính dùng chung.</div>
+        
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -924,6 +952,10 @@ section:last-of-type::after{display:none;}
           <div class="skill-scenario"><strong>Tình huống:</strong> Một tài khoản lạ hỏi: “Em học lớp nào? Nhà ở đâu? Gửi ảnh trường cho anh/chị xem nhé.” Không cần trả lời. Có thể chặn tài khoản và báo người lớn nếu thấy đáng ngờ.</div>
           <div class="skill-action"><strong>Trước khi đăng ảnh, hỏi 4 câu:</strong> Ảnh có lộ thông tin riêng tư không? Có người khác trong ảnh không? Mình đã xin phép chưa? Nếu ảnh tồn tại lâu trên Internet thì mình có thấy ổn không?</div>
           <div class="skill-activity"><div class="skill-mini-title"><span class="dot"></span>Hoạt động/Infographic</div><p>Poster <strong>“Lồng kính đặc biệt”</strong>: khuôn mặt em bé được bảo vệ bởi một lớp kính ảo, tượng trưng cho việc bảo vệ thông tin. Đóng vai tình huống một bạn chia sẻ ảnh nhóm; cả nhóm thảo luận nên chia sẻ hay không và vì sao.</p></div>
+        
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -944,6 +976,10 @@ section:last-of-type::after{display:none;}
           <div class="skill-scenario"><strong>Tình huống:</strong> Em thấy một bạn bị cả nhóm chế giễu trong bình luận. Việc “thả haha” hoặc chia sẻ lại vẫn góp phần làm nội dung lan rộng. Hãy không tham gia, báo người lớn và hỗ trợ bạn theo cách an toàn.</div>
           <div class="skill-danger"><strong>Không nên:</strong> trả đũa, tạo tài khoản giả để xúc phạm lại, đăng thông tin riêng tư của người bắt nạt hoặc rủ thêm người vào công kích.</div>
           <div class="skill-activity"><div class="skill-mini-title"><span class="dot"></span>Hoạt động/Infographic</div><p>Hoạt cảnh <strong>“Bức thư im lặng”</strong>: diễn một tình huống bị bắt nạt ảo rồi thảo luận cảm xúc và cách xử lý. Infographic <strong>“AN TOÀN”</strong>: mỗi chữ gắn với một lời khuyên; ví dụ A: “Âm thầm chia sẻ khó khăn với người lớn”.</p></div>
+        
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -968,6 +1004,10 @@ section:last-of-type::after{display:none;}
           <div class="skill-danger"><strong>Cảnh báo:</strong> Biểu tượng khóa/HTTPS chỉ bảo vệ kết nối, <strong>không tự chứng minh</strong> website là đáng tin cậy. Vẫn phải kiểm tra nguồn.</div>
           <div class="skill-scenario"><strong>Tình huống:</strong> Một quảng cáo ghi “Bạn là người thứ 1.000. Hãy nhập số điện thoại để nhận quà”. Quy tắc an toàn: <strong>dừng lại → không nhập → kiểm tra nguồn → hỏi người lớn nếu cần</strong>.</div>
           <div class="skill-activity"><div class="skill-mini-title"><span class="dot"></span>Hoạt động/Infographic</div><p>Trò chơi <strong>“Phân biệt trang thật – trang giả”</strong>: giáo viên đưa hai ảnh chụp website, học sinh tìm tên miền, cách viết, nút bấm và nội dung bất thường. Infographic <strong>“Bảo vệ đầu tiên: Lọc web”</strong> dùng hình “lưới sắt” để minh họa bộ lọc.</p></div>
+        
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -991,6 +1031,10 @@ section:last-of-type::after{display:none;}
           <div class="skill-scenario"><strong>Tình huống:</strong> Một ứng dụng máy tính cầm tay yêu cầu camera, micro, danh bạ và vị trí. Hãy hỏi: <strong>“Những quyền này có thật sự cần để máy tính hoạt động không?”</strong></div>
           <div class="skill-action"><strong>3 bước:</strong> Đọc → Hiểu → Chỉ cấp quyền cần thiết. Sau đó có thể kiểm tra lại trong cài đặt quyền riêng tư của thiết bị.</div>
           <div class="skill-activity"><div class="skill-mini-title"><span class="dot"></span>Hoạt động/Infographic</div><p>Nhóm mô phỏng quy trình <strong>“cấp phép”</strong> cho một ứng dụng ảo: nhóm A tạo app và yêu cầu quyền; nhóm B quyết định quyền nào hợp lý và giải thích lý do. Infographic <strong>“3S – Stop, Speak, Select”</strong>: dừng lại đọc, nói với người lớn, chọn quyền cẩn thận.</p></div>
+        
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -1016,6 +1060,10 @@ section:last-of-type::after{display:none;}
           <div class="skill-action"><strong>5 bước dễ nhớ:</strong> Biết người → Kiểm tra tài khoản → Giữ riêng tư → Nghĩ trước khi đăng → Báo khi có vấn đề.</div>
           <div class="skill-activity"><div class="skill-mini-title"><span class="dot"></span>Hoạt động/Infographic</div><p>Tình huống <strong>“Mạng xã hội của lớp”</strong>: học sinh đóng vai các tài khoản ảo và quyết định chấp nhận lời mời hay không, đăng bài nào. Infographic <strong>“5Đ của mạng xã hội”</strong>: Đúng, Đủ nghiêm túc, Đủ riêng tư, Đủ cẩn trọng, Đúng phép (hỏi ý).</p></div>
           <div class="skill-danger"><strong>Nhớ:</strong> “Thấy trên mạng” không có nghĩa là “được phép chia sẻ”. Quyền riêng tư của người khác vẫn cần được tôn trọng.</div>
+        
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
     </div>
@@ -1046,6 +1094,11 @@ section:last-of-type::after{display:none;}
             <li><strong>Quét virus định kỳ:</strong> dùng phần mềm do trường hoặc gia đình cung cấp.</li>
             <li><strong>Hạn chế cho mượn thiết bị:</strong> tránh để người khác cài ứng dụng lạ vào máy của em.</li></ul></div>
           <div class="skill-activity"><strong>Hoạt động/Infographic:</strong> “Bác sĩ máy tính” – học sinh làm video ngắn hướng dẫn cập nhật ứng dụng, quét virus, khóa màn hình. Infographic “Hạt nhân bảo mật”: thiết bị của em ở giữa, xung quanh là các tầng phòng thủ (mật khẩu, cập nhật, diệt virus).</div>
+        
+          <div class="skill-detail-block"><div class="skill-mini-title"><span class="dot"></span><span class="todo-badge">TO-DO</span> 5 việc cần hoàn thành</div><div class="skill-checklist" data-skill="6"></div><div class="skill-check-count">Đã hoàn thành: <span>0</span>/5</div></div>
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -1067,6 +1120,11 @@ section:last-of-type::after{display:none;}
             <li><strong>Tra Google:</strong> tìm một đoạn trong tin; nếu là tin thật thường sẽ có trên nhiều trang uy tín.</li>
             <li><strong>Không chắc thì hỏi người lớn:</strong> cha mẹ, thầy cô hoặc cơ quan chính thức.</li></ul></div>
           <div class="skill-activity"><strong>Hoạt động/Infographic:</strong> Chia nhóm, mỗi nhóm nhận một tin ngắn “thử nghiệm” và kiểm tra thật/giả qua Google hoặc hỏi thầy cô. Infographic “Biển chỉ đường thông tin”: biển “Nguồn chính thống” và biển “Nguồn không rõ”.</div>
+        
+          <div class="skill-detail-block"><div class="skill-mini-title"><span class="dot"></span><span class="todo-badge">TO-DO</span> 5 việc cần hoàn thành</div><div class="skill-checklist" data-skill="7"></div><div class="skill-check-count">Đã hoàn thành: <span>0</span>/5</div></div>
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -1104,6 +1162,11 @@ section:last-of-type::after{display:none;}
               </div>
             </div>
           </div>
+        
+          <div class="skill-detail-block"><div class="skill-mini-title"><span class="dot"></span><span class="todo-badge">TO-DO</span> 5 việc cần hoàn thành</div><div class="skill-checklist" data-skill="8"></div><div class="skill-check-count">Đã hoàn thành: <span>0</span>/5</div></div>
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -1126,6 +1189,11 @@ section:last-of-type::after{display:none;}
             <li><strong>Không tham gia lan truyền:</strong> không chia sẻ, thích, bình luận khi chưa rõ thông tin.</li>
             <li><strong>Tự hỏi:</strong> “Thông tin này có giúp ích gì không?” trước khi chia sẻ.</li></ul></div>
           <div class="skill-activity"><strong>Hoạt động/Infographic:</strong> Mỗi nhóm vẽ poster một “gương mặt tin giả” kèm cách phát hiện. Infographic “Ba lớp phòng thủ”: kiểm chứng nguồn, công nghệ (tìm ảnh ngược) và sự cảnh giác cá nhân.</div>
+        
+          <div class="skill-detail-block"><div class="skill-mini-title"><span class="dot"></span><span class="todo-badge">TO-DO</span> 5 việc cần hoàn thành</div><div class="skill-checklist" data-skill="9"></div><div class="skill-check-count">Đã hoàn thành: <span>0</span>/5</div></div>
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -1147,6 +1215,11 @@ section:last-of-type::after{display:none;}
             <li><strong>Cảnh giác với nội dung “quá hoàn hảo”</strong> hoặc giọng người thân đột ngột khác thường – hãy xác minh qua kênh khác.</li>
             <li><strong>Hỏi người lớn:</strong> deepfake khó nhận ra bằng mắt thường, nên hãy hỏi thầy cô, phụ huynh khi nghi ngờ.</li></ul></div>
           <div class="skill-activity"><strong>Hoạt động/Infographic:</strong> Xem hai video ngắn (một thật, một đã chỉnh sửa) và thảo luận dấu hiệu khác biệt như mắt, môi, ánh sáng không khớp. Infographic “Bộ lọc công nghệ”: các cách kiểm tra nguồn và công cụ hỗ trợ phát hiện nội dung chỉnh sửa.</div>
+        
+          <div class="skill-detail-block"><div class="skill-mini-title"><span class="dot"></span><span class="todo-badge">TO-DO</span> 5 việc cần hoàn thành</div><div class="skill-checklist" data-skill="10"></div><div class="skill-check-count">Đã hoàn thành: <span>0</span>/5</div></div>
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
 
@@ -1168,8 +1241,37 @@ section:last-of-type::after{display:none;}
             <li><strong>Có sự đồng hành của người lớn:</strong> cha mẹ, thầy cô hướng dẫn kỹ năng và giúp phòng tránh rủi ro.</li>
             <li><strong>Tôn trọng nội quy nhà trường:</strong> chỉ truy cập trang do thầy cô gợi ý, không cài phần mềm lạ tại phòng máy.</li></ul></div>
           <div class="skill-activity"><strong>Hoạt động/Infographic:</strong> Bảng “Tuổi Xanh” – các mức tuổi và quyền/trách nhiệm tương ứng. Trò chơi “Rà soát quy tắc”: đóng vai phụ huynh và học sinh, đối thoại “Em có thể làm gì online?” để phân biệt nên/không nên.</div>
+        
+          <div class="skill-detail-block"><div class="skill-mini-title"><span class="dot"></span><span class="todo-badge">TO-DO</span> 5 việc cần hoàn thành</div><div class="skill-checklist" data-skill="11"></div><div class="skill-check-count">Đã hoàn thành: <span>0</span>/5</div></div>
+          <div class="skill-card-nav">
+            <button type="button" class="skill-back-checklist" data-return-checklist>↩ <span>Quay về checklist</span></button>
+          </div>
         </div></div></div>
       </article>
+    </div>
+
+    <!-- CHECKLIST 12 KỸ NĂNG -->
+    <div class="skill-action-board reveal" id="skill-checklist" aria-live="polite">
+      <div class="skill-action-board-head">
+        <div class="skill-action-board-copy">
+          <span class="subsection-label" data-i18n="safety.todo.label">CHECKLIST THỰC HÀNH</span>
+          <h3 class="h3" style="margin-top:10px" data-i18n="safety.todo.title">Checklist 12 kỹ năng an toàn mạng</h3>
+          <p data-i18n="safety.todo.sub">Tick vào từng kỹ năng khi em đã đọc, hiểu và biết cách thực hiện. Mỗi kỹ năng có 5 việc thực hành chi tiết trong thẻ tương ứng.</p>
+          <div class="skill-action-board-note" data-i18n="safety.todo.note">Mẹo: có thể mở thẻ kỹ năng để xem hướng dẫn chi tiết, sau đó quay lại checklist bằng nút “Quay về checklist”. Trạng thái checklist được lưu trên trình duyệt này.</div>
+        </div>
+        <button type="button" class="skill-board-reset" id="skillBoardReset" data-i18n="safety.todo.reset">↺ Bỏ tick toàn bộ</button>
+      </div>
+      <div class="skill-board-list" id="skillBoardList"></div>
+      <div class="skill-board-sources">
+        <strong data-i18n="safety.todo.sources">Cơ sở tham khảo:</strong>
+        <div class="skill-board-source-links">
+          <a href="https://www.cisa.gov/secure-our-world" target="_blank" rel="noopener noreferrer">CISA · Secure Our World</a>
+          <a href="https://pages.nist.gov/800-63-4/sp800-63b.html" target="_blank" rel="noopener noreferrer">NIST · SP 800-63B</a>
+          <a href="https://consumer.ftc.gov/consumer-alerts/2025/04/protect-yourself-phishing-scams" target="_blank" rel="noopener noreferrer">FTC · Phishing</a>
+          <a href="https://www.unicef.org/parenting/child-care/supporting-child-negative-online-experience" target="_blank" rel="noopener noreferrer">UNICEF · Online safety</a>
+        </div>
+        <p style="margin-top:10px" data-i18n="safety.todo.originality">Cách diễn đạt checklist do dự án tự biên soạn và tổng hợp; các liên kết dùng để đối chiếu cơ sở hướng dẫn, không sao chép nguyên văn.</p>
+      </div>
     </div>
 
   </div>
@@ -1267,8 +1369,8 @@ section:last-of-type::after{display:none;}
     <div class="card level-card reveal">
       <div class="seg" id="levelSeg" role="tablist" aria-label="Chọn cấp học">
         <span class="seg-thumb" aria-hidden="true"></span>
-        <button type="button" role="tab" class="seg-btn active" aria-selected="true" data-level="tieuhoc" data-i18n="level.1">Tiểu học (Lớp 1–5)</button>
-        <button type="button" role="tab" class="seg-btn" aria-selected="false" data-level="thcs" data-i18n="level.2">THCS (Lớp 6–9)</button>
+        <button type="button" role="tab" id="levelTabPrimary" class="seg-btn active" aria-selected="true" aria-controls="levelList" data-level="tieuhoc" data-i18n="level.1">Tiểu học (Lớp 1–5)</button>
+        <button type="button" role="tab" id="levelTabLower" class="seg-btn" aria-selected="false" aria-controls="levelList" data-level="thcs" data-i18n="level.2">THCS (Lớp 6–9)</button>
       </div>
       <div class="level-body">
         <div class="ring" aria-label="Tiến độ">
@@ -1278,7 +1380,7 @@ section:last-of-type::after{display:none;}
           </svg>
           <div class="ring-text" id="ringText">0/6</div>
         </div>
-        <div class="checklist-wrapper level-list" id="levelList"></div>
+        <div class="checklist-wrapper level-list" id="levelList" role="tabpanel" tabindex="0" aria-live="polite" aria-labelledby="levelTabPrimary"></div>
       </div>
       <div class="level-actions"><button type="button" class="level-reset-btn" id="levelReset">↺ Bỏ tick cấp học này</button></div>
     </div>
@@ -1448,15 +1550,226 @@ section:last-of-type::after{display:none;}
   const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const finePointer=window.matchMedia('(pointer:fine)').matches;
   const AUTO_EN={"Cẩm nang An toàn mạng & Nhận diện tin giả – TH&THCS Cao Xanh": "Internet Safety & Fake News Recognition Handbook – TH&THCS Cao Xanh", "Cuộn xuống để khám phá": "Scroll to explore", "0%": "0%", "CORE 01–06": "CORE 01–06", "EXTENDED 07–12": "EXTENDED 07–12", "1. Mật khẩu và tài khoản an toàn (Password)": "1. Safe passwords and accounts (Password)", "Mật khẩu giống như chìa khóa của tài khoản.": "A password is like the key to an account.", "Mỗi tài khoản trên web (trò chơi, email, mạng xã hội) cần một mật khẩu đủ mạnh. Nếu người khác biết mật khẩu, họ có thể truy cập tài khoản, đọc thông tin hoặc hành động dưới tên của em.": "Every web account (games, email and social media) needs a strong password. If someone knows it, they may access the account, read information or act in your name.", "Chị Mai dùng mật khẩu gồm chữ hoa, chữ thường, số và ký tự đặc biệt nên tài khoản không bị xâm nhập.": "Mai uses a password with uppercase and lowercase letters, numbers and special characters, so her account is harder to break into.", "Một bạn dùng chung mật khẩu cho email và game; khi mật khẩu game bị lộ, email cũng có nguy cơ bị truy cập.": "A student reuses one password for email and a game; when the game password leaks, the email account is also at risk.", "Thói quen nên nhớ:": "Habit to remember:", "Tình huống:": "Scenario:", "Không đưa mật khẩu.": "Never give out your password.", "“Ghép mật khẩu mạnh”": "“Build a strong password”", "“Quy tắc 4K của mật khẩu”": "“The 4K password rule”", "Không nên:": "Avoid:", "2. Quyền riêng tư cá nhân (Privacy)": "2. Personal privacy (Privacy)", "Quyền riêng tư là quyền kiểm soát thông tin về bản thân.": "Privacy means having control over information about yourself.", "Quyền riêng tư là việc giữ thông tin cá nhân (tên, tuổi, địa chỉ, hình ảnh) chỉ chia sẻ với những người đáng tin cậy và khi có lý do chính đáng.": "Privacy means keeping personal information (name, age, address and images) limited to trusted people and sharing it only for a valid reason.", "Họ tên đầy đủ, ngày sinh, số điện thoại và địa chỉ nhà.": "Full name, date of birth, phone number and home address.", "Tên trường, lớp, lịch học, vị trí hiện tại hoặc thói quen đi lại.": "School name, class, schedule, current location or travel habits.", "Ảnh riêng tư, ảnh gia đình, vé/văn bản có mã QR hoặc thông tin nhận dạng.": "Private photos, family photos, tickets/documents with QR codes or identifying information.", "Tên đăng nhập, mã xác nhận, mật khẩu và thông tin tài khoản.": "Usernames, verification codes, passwords and account information.", "Bé An không cho đăng ảnh gia đình lên mạng xã hội khi chưa hỏi ý bố mẹ.": "An does not allow family photos to be posted on social media before asking the parents.", "Bạn Lan không tiết lộ ngày sinh, số điện thoại cho bạn game lạ qua mạng.": "Lan does not reveal her birthday or phone number to an unfamiliar online gaming friend.", "Một học sinh đăng ảnh nhóm lớp mà chưa hỏi các bạn trong ảnh; trước khi đăng nên cân nhắc quyền riêng tư của mọi người.": "A student posts a class-group photo without asking the people in it; before posting, consider everyone’s privacy.", "Trước khi đăng ảnh, hỏi 4 câu:": "Before posting a photo, ask four questions:", "“Lồng kính đặc biệt”": "“Special privacy glass”", "3. Bắt nạt qua mạng (Cyberbullying)": "3. Cyberbullying", "Bắt nạt qua mạng": "Cyberbullying", "Bạn Tùng bị lập group chat để lan truyền hình ảnh bị trêu cười.": "Tùng is targeted by a group chat created to spread humiliating images.", "Một học sinh tạo email giả mạo để gửi tin nhắn xấu về bạn.": "A student creates a fake email account to send hurtful messages about a classmate.", "Trên diễn đàn, người khác đăng bình luận chê bai, xúc phạm ngoại hình bạn Ánh.": "On a forum, someone posts insulting comments about Ánh’s appearance.", "Một tin đồn sai được nhiều người chia sẻ khiến người bị nhắc tên bị cô lập.": "A false rumor is shared widely, leaving the person named in it isolated.", "Nguyên tắc ứng xử:": "Interaction rule:", "“Bức thư im lặng”": "“The silent letter”", "“AN TOÀN”": "“SAFETY”", "4. Duyệt web an toàn (Safe Browsing)": "4. Safe web browsing (Safe Browsing)", "Duyệt web an toàn": "Safe web browsing", "Minh không nhấp vào quảng cáo “Nhận quà miễn phí” trên trang game vì nghi ngờ lừa đảo.": "Minh does not click a “Free gift” ad on a gaming site because it looks like a scam.", "Lan ưu tiên tìm thông tin trên các trang chính thống như VTV, VnExpress, báo Giáo dục… thay vì tin mọi trang web lạ.": "Lan prefers established sources such as VTV, VnExpress and education news instead of trusting every unfamiliar website.", "Tuấn dùng tính năng lọc nội dung an toàn (SafeSearch) khi tìm ảnh học tập.": "Tuấn uses SafeSearch when looking for study images.", "Một pop-up yêu cầu tải “trình phát video” ngay; thay vì tải vội, học sinh đóng trang và hỏi người lớn.": "A pop-up asks the student to download a “video player” immediately; instead, the student closes the page and asks an adult.", "Đọc tên miền và đường dẫn thay vì chỉ nhìn tên thương hiệu.": "Read the domain and full URL instead of looking only at the brand name.", "Hỏi: mình có thực sự mong đợi liên kết này không?": "Ask: was I really expecting this link?", "Không nhập mật khẩu, mã xác nhận hay dữ liệu cá nhân khi chưa kiểm tra.": "Do not enter passwords, verification codes or personal data before checking the page.", "Không tải file chương trình nếu nguồn không rõ.": "Do not download program files from unclear sources.", "Cảnh báo:": "Warning:", "không tự chứng minh": "does not prove accuracy by itself", "dừng lại → không nhập → kiểm tra nguồn → hỏi người lớn nếu cần": "stop → do not enter anything → check the source → ask an adult if needed", "“Phân biệt trang thật – trang giả”": "“Real site vs. fake site”", "“Bảo vệ đầu tiên: Lọc web”": "“First line of defense: web filtering”", "5. Quyền và cấp phép ứng dụng (App Permissions)": "5. App permissions (App Permissions)", "Quyền ứng dụng": "App permissions", "Mẫn cài game mới yêu cầu quyền danh bạ; bạn quyết định không cấp vì game không cần chức năng đó.": "Mẫn installs a new game that requests contacts access; the permission is denied because the game does not need it.", "Bảo Lan bật quyền ghi âm cho một trò chơi rồi nhận ra ứng dụng có thể sử dụng micro.": "Bảo Lan enables microphone access for a game and realizes the app can use the microphone.", "Một app giả mạo “máy quét virus” yêu cầu quyền quản lý cuộc gọi – dấu hiệu cần dừng lại và hỏi người lớn.": "A fake “virus scanner” app requests call-management access — a sign to stop and ask an adult.", "camera": "camera", "camera + micro": "camera + microphone", "vị trí": "location", "Ứng dụng không liên quan đến chức năng trên nhưng đòi quyền rộng cần được xem xét kỹ hơn.": "An app asking for broad permissions unrelated to its function needs extra scrutiny.", "“Những quyền này có thật sự cần để máy tính hoạt động không?”": "“Are these permissions really necessary for the device to work?”", "3 bước:": "3 steps:", "“cấp phép”": "“permissions”", "“3S – Stop, Speak, Select”": "“3S – Stop, Speak, Select”", "6. Mạng xã hội cơ bản (Social Media Basics)": "6. Social media basics (Social Media Basics)", "Mạng xã hội là nơi kết nối nhưng cũng là nơi thông tin lan truyền rất nhanh.": "Social media connects people, but information can also spread very quickly there.", "Các nền tảng như YouTube, Zalo, Facebook có điều kiện độ tuổi (ví dụ Facebook yêu cầu từ 13 tuổi) và tiềm ẩn rủi ro như tài khoản giả mạo, lừa đảo.": "Platforms such as YouTube, Zalo and Facebook have age requirements and risks such as fake accounts and scams.", "Nhiều bạn dùng tài khoản của cha mẹ; khi đó cần có sự đồng ý và giám sát phù hợp, luôn hỏi ý kiến trước khi lên mạng xã hội.": "Some students use a parent’s account; this should involve permission and appropriate supervision, with an adult consulted first.", "Khánh thấy bình luận xấu về mình trên YouTube nhưng không đáp trả; bạn báo thầy cô.": "Khánh sees hurtful comments on YouTube but does not retaliate; he tells a teacher.", "Một tài khoản giả mạo bạn bè nhắn xin tiền “làm từ thiện”. Chỉ nhìn ảnh đại diện chưa đủ để biết đó là người thật.": "A fake account posing as a friend asks for money “for charity.” A profile photo alone is not enough to prove who is behind the account.", "Nội dung có đúng và đủ bối cảnh không?": "Is the content accurate and shown in full context?", "Có lộ thông tin cá nhân của mình hoặc người khác không?": "Does it reveal personal information about me or someone else?", "Có người khác trong ảnh/video chưa đồng ý không?": "Does the photo/video include someone who has not agreed to it?", "Nếu nội dung tồn tại lâu trên Internet, mình có vẫn thấy ổn không?": "Would I still be comfortable if this content stayed online for a long time?", "5 bước dễ nhớ:": "5 easy steps:", "“Mạng xã hội của lớp”": "“Class social network”", "“5Đ của mạng xã hội”": "“The 5D social-media rule”", "Nhớ:": "Remember:", "7. Bảo mật thiết bị (Device Security)": "7. Device security (Device Security)", "Giải thích:": "Explanation:", "Ví dụ:": "Example:", "Kiên cho các bạn mượn máy tính bảng nhưng luôn đặt mật khẩu màn hình.": "Kiên lends the tablet to friends but always keeps a screen lock enabled.", "Nhóm học sinh thấy USB lạ ngoài hành lang, không cắm vào máy của trường để tránh nhiễm virus.": "A group of students finds an unfamiliar USB drive and does not plug it into a school computer to avoid malware.", "Phần mềm tải về không rõ nguồn khiến điện thoại bị nhiễm quảng cáo.": "Software from an unclear source causes a phone to be flooded with unwanted ads.", "Quy tắc/checklist:": "Rules/checklist:", "Khóa thiết bị:": "Lock devices:", "Cập nhật phần mềm:": "Update software:", "Chỉ tải ứng dụng từ nguồn tin cậy:": "Download apps only from trusted sources:", "Quét virus định kỳ:": "Scan for malware regularly:", "Hạn chế cho mượn thiết bị:": "Limit device lending:", "Hoạt động/Infographic:": "Activity/Infographic:", "8. Nhận diện nguồn tin (Source Evaluation)": "8. Source evaluation (Source Evaluation)", "Một tin về việc trường nghỉ học được nhiều báo lớn (VnExpress, Zing…) cùng đăng với nội dung khớp nhau → đáng tin hơn.": "A school-closure notice reported consistently by several major outlets is more credible than a single unverified post.", "Một ảnh “bão thổi bay trường học” chỉ có trên một fanpage lạ, không thấy báo chí chính thống đưa tin → nghi ngờ tin giả.": "A “storm blew away the school” image appears only on an unfamiliar fan page and not in established news → be skeptical.", "Một bài có tiêu đề in hoa toàn bộ, nhiều dấu chấm than, không rõ tác giả → cần kiểm tra kỹ trước khi tin.": "A post with an all-caps headline, many exclamation marks and no clear author should be checked carefully.", "Kiểm tra nguồn tin:": "Check the source:", "So sánh nhiều nguồn:": "Compare multiple sources:", "Đọc kỹ tiêu đề:": "Read beyond the headline:", "Tra Google:": "Search the web:", "Không chắc thì hỏi người lớn:": "Ask an adult when unsure:", "9. Kiểm chứng thông tin (Fact-Checking)": "9. Fact-checking (Fact-Checking)", "Tin “tỏi chữa COVID” lan truyền: em Hà tra cứu và thấy cơ quan y tế cùng WHO cảnh báo không có bằng chứng → đây là tin sai.": "A “garlic cures COVID” claim spreads; Hà checks it and finds health authorities and WHO say there is no evidence → the claim is false.", "Lâm nhận được thông báo “nghỉ học vì bão”, đọc kỹ thì thấy ngày đăng là của năm trước → tin cũ bị đăng lại.": "Lâm receives a “school closed because of a storm” post, but the date is from last year → old information was reposted.", "Một ảnh “nữ sinh nguy kịch sau khi tiêm vaccine” được lan truyền; nhóm em hỏi giáo viên và tra ảnh ngược, phát hiện là ảnh cũ bị ghép sai bối cảnh.": "An image claiming a student became seriously ill after vaccination spreads; the group asks a teacher and reverse-searches it, discovering an older image used out of context.", "Đọc toàn bộ, không chỉ lướt tiêu đề.": "Read the whole item, not just the headline.", "Xác minh nguồn và ngày tháng:": "Verify the source and date:", "Đối chiếu dữ liệu chính thống:": "Cross-check official data:", "Dùng công cụ kiểm chứng:": "Use verification tools:", "Không chia sẻ ngay:": "Do not share immediately:", "Sơ đồ quy trình kiểm chứng tin giả": "Fake-news verification flow", "Nhận thông tin": "Receive the information", "Nguồn tin chính thống?": "Is the source official/reputable?", "Có": "Yes", "Đối chiếu thêm ít nhất 1 nguồn → tin đáng tin ✔️": "Cross-check at least one more source → more credible ✔️", "Không rõ / lạ": "Unclear / unfamiliar", "Kiểm chứng chuyên sâu": "Verify more deeply", "Có bằng chứng, nhiều nguồn uy tín khớp nhau?": "Do evidence and multiple reputable sources agree?", "Có thể tin, vẫn nên cẩn trọng khi chia sẻ": "May be trusted, but still share carefully", "Nhiều dấu hiệu bất thường": "Multiple warning signs", "Nghi là tin giả ❌ → dừng chia sẻ, báo người lớn": "Likely fake ❌ → stop sharing and tell an adult", "10. Các loại tin giả phổ biến (Misinformation Types)": "10. Common types of misinformation (Misinformation Types)", "tin đồn": "rumor", "tin sai lệch": "misleading information", "ảnh/video giả mạo": "manipulated photos/videos", "nội dung do AI tạo ra không đúng sự thật": "false AI-generated content", "thuyết âm mưu": "conspiracy theory", "Tin “ăn bí đỏ vào ban đêm gây mộng du” – tin đồn không có căn cứ.": "The claim “eating pumpkin at night causes sleepwalking” is an unsupported rumor.", "Tin nhắn dây chuyền “chia sẻ cho 10 người để tránh xui rủi” – dạng tin lan truyền dựa vào nỗi sợ.": "The chain message “share with 10 people to avoid bad luck” spreads through fear.", "Video “người nổi tiếng nói điều họ chưa từng nói” – có thể là deepfake do AI tạo ra.": "A video of a public figure “saying something they never said” may be an AI-generated deepfake.", "Một thông báo “học sinh bị bệnh lạ” lan qua Zalo, hóa ra dùng ảnh minh họa không liên quan đến trường.": "A Zalo post claiming students have a strange illness turns out to use an unrelated illustrative image.", "Không tin ngay tin đồn": "Do not believe rumors immediately", "Quan sát kỹ:": "Observe carefully:", "Tra cứu sự thật:": "Look for the facts:", "Không tham gia lan truyền:": "Do not help it spread:", "Tự hỏi:": "Ask yourself:", "11. AI và Deepfake": "11. AI and deepfakes", "deepfake": "deepfake", "Một đoạn video “bạn Trúc đọc thơ” được chia sẻ rộng rãi, sau đó mới biết khuôn mặt bị ghép bằng AI.": "A video of “Trúc reciting a poem” spreads widely, then it is discovered that the face was composited with AI.", "Một bản tin giả “người nổi tiếng kêu gọi điều sai sự thật” được tạo bằng AI để đánh lừa người xem.": "A fake news clip in which a public figure “promotes something false” is generated with AI to deceive viewers.", "Một cuộc gọi có giọng giống người thân nhờ chuyển tiền gấp – có thể là giọng nói bị giả mạo.": "A call with a relative-like voice urgently asks for money — the voice could be spoofed.", "Hoài nghi nội dung gây sốc": "Be skeptical of shocking content", "Kiểm tra nguồn:": "Check the source:", "Dùng công cụ hỗ trợ:": "Use supporting tools:", "Cảnh giác với nội dung “quá hoàn hảo”": "Be cautious with “too perfect” content", "Hỏi người lớn:": "Ask an adult:", "12. Kiến thức pháp lý và đạo đức cho trẻ vị thành niên": "12. Legal and ethical basics for minors", "Luật Trẻ em (2016)": "Law on Children (2016)", "Luật An ninh mạng (2018)": "Law on Cybersecurity (2018)", "Nam muốn lập tài khoản chơi game có thu phí nên cần hỏi ý kiến và được cha mẹ đồng ý.": "Nam wants to create a paid gaming account, so he should ask for and receive parental permission.", "Đăng lại bài viết kích động, sai sự thật lên mạng có thể vi phạm quy định, kể cả khi chỉ “chia sẻ cho vui”.": "Reposting inflammatory or false content can violate rules even when it is “just for fun.”", "Học sinh trường Cao Xanh tuân thủ nội quy về sử dụng điện thoại trong giờ học.": "Students at Cao Xanh follow school rules on phone use during class.", "Tuân thủ độ tuổi của nền tảng:": "Follow platform age requirements:", "Chọn nội dung phù hợp lứa tuổi:": "Choose age-appropriate content:", "Đạo đức trực tuyến:": "Online ethics:", "Có sự đồng hành của người lớn:": "Have adult guidance:", "Tôn trọng nội quy nhà trường:": "Respect school rules:", "Checklist an toàn mạng theo cấp học": "Internet safety checklist by school level", "Tiểu học (Lớp 1–5)": "Primary school (Grades 1–5)", "THCS (Lớp 6–9)": "Lower secondary (Grades 6–9)", "↺ Bỏ tick cấp học này": "↺ Clear this level", "TÓM TẮT": "SUMMARY", "Thói quen an toàn Internet thiết yếu": "Essential Internet safety habits", "Tóm tắt những thói quen an toàn Internet thiết yếu giúp học sinh Tiểu học và THCS dễ dàng áp dụng hằng ngày.": "A summary of essential Internet safety habits that primary and lower-secondary students can easily apply every day.", "Dừng lại trước khi bấm": "Pause before you click", "Gặp link lạ, quảng cáo hay phần thưởng bất ngờ: dừng lại, không nhấp, không nhập thông tin.": "For unfamiliar links, ads or unexpected prizes: stop, do not click, and do not enter information.", "Cả hai cấp": "Both levels", "Mật khẩu là của riêng em": "Passwords are personal", "Mỗi tài khoản một mật khẩu, không chia sẻ cho bạn bè hay người lạ.": "Use a different password for each account and never share it with friends or strangers.", "Giữ kín thông tin cá nhân": "Keep personal information private", "Họ tên đầy đủ, địa chỉ, số điện thoại, lớp học, ảnh riêng tư: chỉ chia sẻ khi có người lớn cho phép.": "Full name, address, phone number, class and private photos: share only with an adult’s permission.", "Tiểu học": "Primary school", "Hỏi người lớn khi phân vân": "Ask an adult when unsure", "Kết bạn với người lạ, tải app/game mới, gặp nội dung lạ: hỏi cha mẹ hoặc thầy cô.": "When an online stranger contacts you, you want a new app/game, or you see unfamiliar content: ask a parent or teacher.", "Kiểm chứng trước khi tin": "Verify before believing", "Ai đăng? Nguồn ở đâu? Có nguồn uy tín khác xác nhận không?": "Who posted it? Where is the source? Do other reputable sources confirm it?", "THCS": "Lower secondary", "Nghĩ trước khi đăng": "Think before posting", "Nội dung có đúng, lịch sự, có lộ thông tin của mình hay người khác không? Không chắc thì không chia sẻ.": "Is it accurate and respectful? Does it reveal my information or someone else’s? When unsure, do not share.", "Cư xử văn minh trên mạng": "Be respectful online", "Không bình luận xấu, không hùa theo tin đồn; thấy bạn bị bắt nạt hãy lưu bằng chứng và báo người lớn.": "Do not post hurtful comments or join rumors; if a friend is bullied, preserve useful evidence and tell an adult.", "Giữ thiết bị và tài khoản gọn gàng": "Keep devices and accounts secure", "Đăng xuất trên máy dùng chung, cập nhật ứng dụng, chỉ cấp những quyền thật sự cần thiết.": "Sign out on shared devices, update apps, and grant only the permissions that are truly needed.", "Một ngày dùng mạng an toàn": "A safer day online", "Trước khi dùng": "Before using the Internet", "Khóa màn hình, mở đúng ứng dụng hoặc trang quen thuộc.": "Lock the screen and open only the intended app or familiar site.", "Khi lướt và học": "While browsing and studying", "Đọc kỹ nguồn, không bấm link lạ, đối chiếu nhiều nguồn.": "Read the source carefully, avoid unfamiliar links and compare multiple sources.", "Khi chat và đăng bài": "When chatting and posting", "Nghĩ trước khi đăng, tôn trọng người khác, giữ riêng tư.": "Think before posting, respect others and protect privacy.", "Trước khi tắt máy": "Before signing off", "Đăng xuất máy dùng chung; có chuyện lạ thì kể với người lớn.": "Sign out of shared devices; tell an adult if something unusual happens.", "Khi em cần được giúp đỡ": "When you need help", "Tổng đài quốc gia bảo vệ trẻ em": "National child protection hotline", "Bảo vệ trẻ em": "Child protection", "Công an": "Police", "Thông tin liên hệ có thể thay đổi; hãy nhờ thầy cô hoặc cha mẹ kiểm tra lại trên cổng thông tin chính thức.": "Contact details can change; ask a teacher or parent to verify them on official information portals.", "Bỏ qua để đến nội dung chính": "Skip to main content", "Điều hướng": "Navigation", "Đóng menu": "Close menu", "Mở menu": "Open menu", "Về đầu trang": "Back to top"};
-Object.assign(AUTO_EN,{"03. Bắt nạt qua mạng":"03. Cyberbullying","nghiêm cấm đăng tải thông tin sai sự thật gây hoang mang hoặc xâm phạm quyền, lợi ích hợp pháp của người khác. Các nền tảng như Facebook có quy định tuổi tối thiểu (13 tuổi), và việc chơi game online của người dưới 18 tuổi được quản lý theo quy định hiện hành – hãy tham khảo văn bản mới nhất hoặc hỏi thầy cô, phụ huynh.":"prohibit publishing false information that causes public alarm or infringes on another person’s lawful rights and interests. Platforms such as Facebook have minimum-age rules (13+), and online gaming by people under 18 is subject to current regulations—check the latest official rules or ask a teacher or parent.","“Bác sĩ máy tính” – học sinh làm video ngắn hướng dẫn cập nhật ứng dụng, quét virus, khóa màn hình. Infographic “Hạt nhân bảo mật”: thiết bị của em ở giữa, xung quanh là các tầng phòng thủ (mật khẩu, cập nhật, diệt virus).":"“Computer doctor” — students make a short video showing how to update apps, scan for malware and lock the screen. Infographic “Security core”: the device is at the center, surrounded by layers of defense (passwords, updates, malware protection).","Xem hai video ngắn (một thật, một đã chỉnh sửa) và thảo luận dấu hiệu khác biệt như mắt, môi, ánh sáng không khớp. Infographic “Bộ lọc công nghệ”: các cách kiểm tra nguồn và công cụ hỗ trợ phát hiện nội dung chỉnh sửa.":"Watch two short videos (one authentic, one edited) and discuss differences such as mismatched eyes, lips or lighting. Infographic “Technology filter”: ways to check sources and tools that can help detect edited content.","Chia nhóm, mỗi nhóm nhận một tin ngắn “thử nghiệm” và kiểm tra thật/giả qua Google hoặc hỏi thầy cô. Infographic “Biển chỉ đường thông tin”: biển “Nguồn chính thống” và biển “Nguồn không rõ”.":"Split into groups; each group receives a short “test” item and checks whether it is true or false using search or a teacher. Infographic “Information signposts”: signs for “Trusted source” and “Unclear source.”","Bảng “Tuổi Xanh” – các mức tuổi và quyền/trách nhiệm tương ứng. Trò chơi “Rà soát quy tắc”: đóng vai phụ huynh và học sinh, đối thoại “Em có thể làm gì online?” để phân biệt nên/không nên.":"“Green Age” board — age levels and related rights/responsibilities. “Rule review” activity: role-play as parent and student and discuss “What can I do online?” to distinguish appropriate from inappropriate actions.","Em thấy một bạn bị cả nhóm chế giễu trong bình luận. Việc “thả haha” hoặc chia sẻ lại vẫn góp phần làm nội dung lan rộng. Hãy không tham gia, báo người lớn và hỗ trợ bạn theo cách an toàn.":"You see a classmate being mocked by a group in comments. Reacting with laughter or resharing still helps the content spread. Do not join in; tell an adult and support the classmate safely.",": khuôn mặt em bé được bảo vệ bởi một lớp kính ảo, tượng trưng cho việc bảo vệ thông tin. Đóng vai tình huống một bạn chia sẻ ảnh nhóm; cả nhóm thảo luận nên chia sẻ hay không và vì sao.":": a child’s face is protected by a virtual glass layer, symbolizing information protection. Role-play a situation where a student wants to share a group photo; discuss whether it should be shared and why.","(video, âm thanh giả) rất chân thực và tạo nội dung sai lệch rất nhanh. Deepfake có thể làm một người trông như đang nói điều họ chưa từng nói, hoặc ghép mặt người này vào người khác.":"(fake video or audio) can look highly realistic and create misleading content very quickly. A deepfake can make someone appear to say something they never said, or place one person’s face onto another person.","Tài khoản giống hệt bạn của em gửi tin: “Mình đang cần tiền gấp, chuyển giúp mình nhé.” Đừng chuyển tiền ngay. Hãy xác minh người đó qua một kênh liên lạc khác hoặc báo người lớn.":"An account that looks exactly like your friend sends: “I need money urgently, please transfer some.” Do not transfer money immediately. Verify the person through another channel or tell an adult.","Thiết bị cá nhân (máy tính, điện thoại, máy tính bảng) cần được bảo vệ như tài sản riêng: khóa màn hình, cài phần mềm chính hãng, không cắm USB lạ, cập nhật thường xuyên.":"Personal devices (computers, phones and tablets) should be protected like personal property: lock the screen, use legitimate software, do not plug in unknown USB drives and update regularly.","Không nhập mật khẩu vào trang web không rõ nguồn gốc. Nếu nghi ngờ tài khoản bị lộ, hãy báo người lớn đáng tin cậy và thực hiện các bước khôi phục tài khoản của dịch vụ.":"Do not enter passwords on websites from unclear sources. If you suspect an account has been exposed, tell a trusted adult and follow the service’s account-recovery steps.","Là quy trình kiểm tra thông tin thật hay sai: đọc kỹ nội dung, kiểm tra ngày tháng, tìm nguồn gốc, đối chiếu với trang uy tín, hỏi cơ quan hoặc chuyên gia có thẩm quyền.":"It is a process for checking whether information is true or false: read carefully, check dates, find the original source, compare with reputable sites, and ask an authoritative organization or expert when needed.","Mỗi thông tin (bài báo, trạng thái, hình ảnh) đều có nguồn gốc (website, tác giả, tổ chức). Nhận diện nguồn tin là biết đánh giá độ tin cậy của nơi cung cấp thông tin.":"Every piece of information (article, post or image) has an origin (website, author or organization). Source evaluation means assessing how trustworthy the provider is.","Mỗi nhóm vẽ poster một “gương mặt tin giả” kèm cách phát hiện. Infographic “Ba lớp phòng thủ”: kiểm chứng nguồn, công nghệ (tìm ảnh ngược) và sự cảnh giác cá nhân.":"Each group draws a “fake-news face” poster with ways to detect it. Infographic “Three layers of defense”: source verification, technology (reverse-image search) and personal caution.","Một tài khoản lạ hỏi: “Em học lớp nào? Nhà ở đâu? Gửi ảnh trường cho anh/chị xem nhé.” Không cần trả lời. Có thể chặn tài khoản và báo người lớn nếu thấy đáng ngờ.":"An unfamiliar account asks: “What class are you in? Where do you live? Send me a photo of your school.” You do not need to answer. Block the account and tell an adult if it seems suspicious.","quyết định ứng dụng được truy cập những thành phần nào của thiết bị như camera, micro, vị trí, ảnh/tệp hoặc danh bạ. Không phải mọi yêu cầu đều cần được chấp nhận.":"determines which parts of the device an app can access, such as the camera, microphone, location, photos/files or contacts. Not every request needs to be accepted.","Không đáp trả bằng cách bắt nạt lại. Mục tiêu đầu tiên là giảm tiếp xúc với hành vi gây hại, giữ bằng chứng cần thiết và tìm một người lớn đáng tin cậy để hỗ trợ.":"Do not respond by bullying back. The first goal is to reduce exposure to harmful behavior, preserve useful evidence and seek help from a trusted adult.","là hành động nói xấu, dọa dẫm, làm nhục, lan tin xấu hoặc phát tán hình ảnh/nội dung gây tổn thương qua tin nhắn, mạng xã hội, email, diễn đàn hoặc nhóm chat.":"is behavior such as insults, threats, humiliation, harmful rumors or distributing hurtful images/content through messages, social media, email, forums or group chats.","Ảnh có lộ thông tin riêng tư không? Có người khác trong ảnh không? Mình đã xin phép chưa? Nếu ảnh tồn tại lâu trên Internet thì mình có thấy ổn không?":"Does the photo reveal private information? Is someone else in it? Have I asked for permission? Would I still be comfortable if the photo stayed online for a long time?","là biết chọn trang phù hợp, kiểm tra liên kết và không hành động vội khi gặp quảng cáo, pop-up, file tải xuống hoặc lời mời có dấu hiệu bất thường.":"means choosing appropriate sites, checking links and not acting quickly when you encounter ads, pop-ups, downloads or unusual invitations.","đăng mật khẩu lên ảnh chụp màn hình, gửi qua nhóm lớp, dùng tên/ngày sinh làm mật khẩu hoặc để trình duyệt lưu mật khẩu trên máy tính dùng chung.":"posting passwords in screenshots, sending them to class groups, using a name/birthday as a password, or letting a browser save passwords on a shared computer.","Một thông tin nhỏ như lớp học, số điện thoại, địa điểm hay ảnh riêng tư có thể trở nên nhạy cảm khi ghép với nhiều dữ liệu khác.":"A small piece of information such as a class, phone number, location or private photo can become sensitive when combined with other data.","Mục tiêu không chỉ là tạo mật khẩu khó đoán, mà còn là không để lộ, không dùng lại và tăng thêm lớp bảo vệ cho tài khoản.":"The goal is not only to create a hard-to-guess password, but also to keep it private, avoid reusing it and add another layer of account protection.","cho một ứng dụng ảo: nhóm A tạo app và yêu cầu quyền; nhóm B quyết định quyền nào hợp lý và giải thích lý do. Infographic":"for a mock app: Group A designs the app and requests permissions; Group B decides which permissions are reasonable and explains why. Infographic"," trả đũa, tạo tài khoản giả để xúc phạm lại, đăng thông tin riêng tư của người bắt nạt hoặc rủ thêm người vào công kích.":" retaliate, create a fake account to insult them back, post the bully’s private information or recruit others to attack.",": Khắc – không lưu mật khẩu công khai; Khảo – kiểm tra độ mạnh; Kiêng – không chia sẻ; Kíp – thay đổi khi nghi bị lộ.":": K: keep it private; K: check strength; K: keep it unshared; K: change it if you suspect exposure.","Nếu em thấy sợ, bị đe dọa, bị lừa hoặc bị bắt nạt trên mạng, hãy kể ngay với cha mẹ hoặc thầy cô. Em cũng có thể gọi":"If you feel scared, threatened, scammed or bullied online, tell your parents or teacher immediately. You can also call",": giáo viên đưa hai ảnh chụp website, học sinh tìm tên miền, cách viết, nút bấm và nội dung bất thường. Infographic":": a teacher provides two website screenshots; students look for the domain, wording, buttons and unusual content. Infographic",": các nhóm ghép mảnh từ/ký tự để tạo mật khẩu an toàn mà không dùng thông tin dễ đoán về bản thân. Infographic":": groups assemble words/characters to create a safe password without using predictable personal information. Infographic","lần ra trang web gốc hoặc tác giả ban đầu; trang cơ quan nhà nước, báo lớn thường đáng tin hơn trang cá nhân.":"trace the original website or author; government sites and established news outlets are often more reliable than personal pages.","“Thấy trên mạng” không có nghĩa là “được phép chia sẻ”. Quyền riêng tư của người khác vẫn cần được tôn trọng.":"“Being online” does not mean “allowed to share.” Other people’s privacy still deserves respect.","Đọc → Hiểu → Chỉ cấp quyền cần thiết. Sau đó có thể kiểm tra lại trong cài đặt quyền riêng tư của thiết bị.":"Read → Understand → Grant only necessary permissions. Then review them again in the device’s privacy settings.",": học sinh đóng vai các tài khoản ảo và quyết định chấp nhận lời mời hay không, đăng bài nào. Infographic":": students role-play fake accounts and decide whether to accept requests and what to post. Infographic","Một quảng cáo ghi “Bạn là người thứ 1.000. Hãy nhập số điện thoại để nhận quà”. Quy tắc an toàn:":"An ad says “You are the 1,000th visitor. Enter your phone number to receive a prize.” Safety rule:","Cần chú ý điều kiện độ tuổi, tài khoản giả mạo, lừa đảo, bình luận độc hại và quyền riêng tư.":"Pay attention to age requirements, fake accounts, scams, harmful comments and privacy.","Một người tự xưng là bạn cùng lớp nhắn: “Cho mình mật khẩu để mình đăng nhập thử cho vui.”":"Someone claiming to be a classmate messages: “Give me your password so I can log in for fun.”","Biết người → Kiểm tra tài khoản → Giữ riêng tư → Nghĩ trước khi đăng → Báo khi có vấn đề.":"Know the person → Check the account → Protect privacy → Think before posting → Report problems.","video chỉ có trên mạng xã hội mà không có kênh chính thống xác nhận thì cần thận trọng.":"a video that appears only on social media with no reputable channel confirming it should be treated cautiously.","một số công cụ có thể giúp phát hiện chỉnh sửa, nhưng kết quả chỉ mang tính tham khảo.":"some tools can help detect edits, but their results are only indicative.",": diễn một tình huống bị bắt nạt ảo rồi thảo luận cảm xúc và cách xử lý. Infographic":": act out an online-bullying situation and discuss feelings and responses. Infographic",": mỗi chữ gắn với một lời khuyên; ví dụ A: “Âm thầm chia sẻ khó khăn với người lớn”.":": each letter carries one tip; for example, A: “Quietly share difficulties with an adult.”","tên tổ chức uy tín, ngày đăng; quá cũ hoặc không có đơn vị chính thức thì nghi ngờ.":"the name of a reputable organization and the publication date; if it is very old or has no official organization, be cautious.","(miễn phí, hoạt động cả ngày lẫn đêm). Khi có nguy hiểm khẩn cấp, hãy gọi công an.":"(free, available day and night). In an immediate emergency, call the police.","deepfake khó nhận ra bằng mắt thường, nên hãy hỏi thầy cô, phụ huynh khi nghi ngờ.":"deepfakes can be difficult to identify by sight alone, so ask a teacher or parent when you are unsure.","Một ứng dụng máy tính cầm tay yêu cầu camera, micro, danh bạ và vị trí. Hãy hỏi:":"A calculator app asks for camera, microphone, contacts and location. Ask:","dùng mã PIN/mật khẩu/vân tay; không dùng máy của người khác khi chưa đăng xuất.":"use a PIN/password/fingerprint; never use someone else’s device without signing them out first.","không phát tán nội dung xúc phạm, không xâm phạm quyền riêng tư của người khác.":"do not spread insulting content or violate another person’s privacy.","tìm một đoạn trong tin; nếu là tin thật thường sẽ có trên nhiều trang uy tín.":"search for a distinctive excerpt; genuine news is often reported by multiple reputable sites.","chỉ truy cập trang do thầy cô gợi ý, không cài phần mềm lạ tại phòng máy.":"only visit sites recommended by teachers and do not install unfamiliar software on school computers.","chưa đủ tuổi thì không tự lập tài khoản; nếu dùng cần có cha mẹ quản lý.":"if you are under the required age, do not create the account yourself; if access is allowed, have a parent supervise it.","hoặc giọng người thân đột ngột khác thường – hãy xác minh qua kênh khác.":"or a relative’s voice suddenly sounds unusual — verify through another channel.",": Đúng, Đủ nghiêm túc, Đủ riêng tư, Đủ cẩn trọng, Đúng phép (hỏi ý).":": Accurate, Appropriate, Private, Careful and Permission-aware.","Mật khẩu là thông tin riêng tư, không phải bằng chứng của tình bạn.":"A password is private information, not proof of friendship.","dùng tìm kiếm, hỏi người có chuyên môn hoặc xem trang kiểm chứng.":"use search, ask a knowledgeable person or consult a fact-checking page.","tìm kiếm ảnh ngược của Google, các trang fact-check của báo chí.":"use Google reverse-image search and journalism fact-check pages.","hình ảnh thiếu tự nhiên, giọng nói lạ là dấu hiệu cần kiểm tra.":"unnatural visuals or unusual voices are signs that need checking.","quy định trách nhiệm bảo vệ trẻ em, kể cả trên môi trường mạng;":"set responsibilities for protecting children, including in online environments;","cha mẹ, thầy cô hướng dẫn kỹ năng và giúp phòng tránh rủi ro.":"parents and teachers guide skills and help prevent risks.","hỏi thầy cô, phụ huynh hoặc xem các trang kiểm chứng tin tức.":"ask a teacher or parent, or check reputable fact-checking pages.","tin chỉ xuất hiện ở một trang không rõ tên thì cần nghi ngờ.":"a claim appearing only on an unclear site should be treated with suspicion.","tiêu đề giật gân, in hoa toàn bộ là dấu hiệu cần cảnh giác.":"a sensational all-caps headline is a warning sign.","cài bản cập nhật hệ điều hành mới nhất để sửa lỗi bảo mật.":"install the latest operating-system updates to fix security issues.","Google Play, App Store hoặc hệ thống do trường chỉ định.":"Google Play, the App Store or a system designated by the school.","“Thông tin này có giúp ích gì không?” trước khi chia sẻ.":"“Will this information actually help?” before sharing.",": dừng lại đọc, nói với người lớn, chọn quyền cẩn thận.":": stop and read, tell an adult, and choose permissions carefully.","tránh các trang có nội dung bạo lực, khiêu dâm, cờ bạc.":"avoid sites with violent, sexual or gambling content.","không chia sẻ, thích, bình luận khi chưa rõ thông tin.":"do not share, like or comment when the information is still unclear.","hoặc quảng bá quá mạnh mẽ, đặc biệt trên mạng xã hội.":"or is promoted too aggressively, especially on social media.","giảm để người khác cài ứng dụng lạ vào máy của em.":"avoid letting others install unfamiliar apps on your device.","Ở Việt Nam, trẻ em được pháp luật bảo vệ đặc biệt.":"In Vietnam, children receive special legal protection.","website là đáng tin cậy. Vẫn phải kiểm tra nguồn.":"the website is trustworthy. You still need to check the source.","dùng phần mềm do trường hoặc gia đình cung cấp.":"use security software provided by the school or family.","luôn áp dụng “Kiểm chứng trước khi chia sẻ”.":"always apply “Verify before sharing.”","nên bị bạn trong lớp vào đăng bình luận phá.":"is then disrupted by a classmate posting harmful comments.","(chỉ đúng một phần hoặc dùng thông tin cũ),":"(only partly true or based on old information),","(nối các sự kiện không có căn cứ khoa học).":"(links events without scientific support).","Biểu tượng khóa/HTTPS chỉ bảo vệ kết nối,":"The lock icon/HTTPS only protects the connection,","cha mẹ, thầy cô hoặc cơ quan chính thức.":"parents, teachers or official organizations.","dùng hình “lưới sắt” để minh họa bộ lọc.":"use a “metal mesh” illustration to represent the filter.","(không dẫn chứng, lan qua nhóm chat),":"(unsupported and spread through group chats),","Trí tuệ nhân tạo (AI) có thể tạo ra":"Artificial intelligence (AI) can create","Kiểm tra một liên kết trước khi mở":"Check a link before opening it",", nhất là trên mạng xã hội.":", especially on social media.","Trước khi đăng một nội dung":"Before posting content","Hiểu quyền theo chức năng":"Understand permissions by function","Anh Quân đặt mật khẩu là":"Anh Quân sets his password to","App gọi video có thể cần":"A video-call app may need","App chụp ảnh có thể cần":"A camera app may need","Nhóm mô phỏng quy trình":"Permission process simulation","(chỉnh sửa, deepfake),":"(edited or deepfake),","8A3 TH - THCS Cao Xanh":"8A3 — TH&THCS Cao Xanh","Thông tin cần cẩn thận":"Information to handle carefully","Tin giả có nhiều dạng:":"Fake news can take many forms:","5 việc cần hoàn thành":"5 tasks to complete","App bản đồ có thể cần":"A map app may need","Hoạt động/Infographic":"Activity/Infographic","by codedev - hvy":"by codedev - hvy","Chưa hoàn thành":"Not completed","Đã hoàn thành:":"Completed:","Ví dụ gần gũi":"Relatable example","trả đũa, tạo tài khoản giả để xúc phạm lại, đăng thông tin riêng tư của người bắt nạt hoặc rủ thêm người vào công kích.":"retaliate, create a fake account to insult them back, post the bully’s private information or recruit others to attack.","tránh để người khác cài ứng dụng lạ vào máy của em":"avoid letting others install unfamiliar apps on your device."});
+Object.assign(AUTO_EN,{"03. Bắt nạt qua mạng":"03. Cyberbullying","nghiêm cấm đăng tải thông tin sai sự thật gây hoang mang hoặc xâm phạm quyền, lợi ích hợp pháp của người khác. Các nền tảng như Facebook có quy định tuổi tối thiểu (13 tuổi), và việc chơi game online của người dưới 18 tuổi được quản lý theo quy định hiện hành – hãy tham khảo văn bản mới nhất hoặc hỏi thầy cô, phụ huynh.":"prohibit publishing false information that causes public alarm or infringes on another person’s lawful rights and interests. Platforms such as Facebook have minimum-age rules (13+), and online gaming by people under 18 is subject to current regulations—check the latest official rules or ask a teacher or parent.","“Bác sĩ máy tính” – học sinh làm video ngắn hướng dẫn cập nhật ứng dụng, quét virus, khóa màn hình. Infographic “Hạt nhân bảo mật”: thiết bị của em ở giữa, xung quanh là các tầng phòng thủ (mật khẩu, cập nhật, diệt virus).":"“Computer doctor” — students make a short video showing how to update apps, scan for malware and lock the screen. Infographic “Security core”: the device is at the center, surrounded by layers of defense (passwords, updates, malware protection).","Xem hai video ngắn (một thật, một đã chỉnh sửa) và thảo luận dấu hiệu khác biệt như mắt, môi, ánh sáng không khớp. Infographic “Bộ lọc công nghệ”: các cách kiểm tra nguồn và công cụ hỗ trợ phát hiện nội dung chỉnh sửa.":"Watch two short videos (one authentic, one edited) and discuss differences such as mismatched eyes, lips or lighting. Infographic “Technology filter”: ways to check sources and tools that can help detect edited content.","Chia nhóm, mỗi nhóm nhận một tin ngắn “thử nghiệm” và kiểm tra thật/giả qua Google hoặc hỏi thầy cô. Infographic “Biển chỉ đường thông tin”: biển “Nguồn chính thống” và biển “Nguồn không rõ”.":"Split into groups; each group receives a short “test” item and checks whether it is true or false using search or a teacher. Infographic “Information signposts”: signs for “Trusted source” and “Unclear source.”","Bảng “Tuổi Xanh” – các mức tuổi và quyền/trách nhiệm tương ứng. Trò chơi “Rà soát quy tắc”: đóng vai phụ huynh và học sinh, đối thoại “Em có thể làm gì online?” để phân biệt nên/không nên.":"“Green Age” board — age levels and related rights/responsibilities. “Rule review” activity: role-play as parent and student and discuss “What can I do online?” to distinguish appropriate from inappropriate actions.","Em thấy một bạn bị cả nhóm chế giễu trong bình luận. Việc “thả haha” hoặc chia sẻ lại vẫn góp phần làm nội dung lan rộng. Hãy không tham gia, báo người lớn và hỗ trợ bạn theo cách an toàn.":"You see a classmate being mocked by a group in comments. Reacting with laughter or resharing still helps the content spread. Do not join in; tell an adult and support the classmate safely.",": khuôn mặt em bé được bảo vệ bởi một lớp kính ảo, tượng trưng cho việc bảo vệ thông tin. Đóng vai tình huống một bạn chia sẻ ảnh nhóm; cả nhóm thảo luận nên chia sẻ hay không và vì sao.":": a child’s face is protected by a virtual glass layer, symbolizing information protection. Role-play a situation where a student wants to share a group photo; discuss whether it should be shared and why.","(video, âm thanh giả) rất chân thực và tạo nội dung sai lệch rất nhanh. Deepfake có thể làm một người trông như đang nói điều họ chưa từng nói, hoặc ghép mặt người này vào người khác.":"(fake video or audio) can look highly realistic and create misleading content very quickly. A deepfake can make someone appear to say something they never said, or place one person’s face onto another person.","Tài khoản giống hệt bạn của em gửi tin: “Mình đang cần tiền gấp, chuyển giúp mình nhé.” Đừng chuyển tiền ngay. Hãy xác minh người đó qua một kênh liên lạc khác hoặc báo người lớn.":"An account that looks exactly like your friend sends: “I need money urgently, please transfer some.” Do not transfer money immediately. Verify the person through another channel or tell an adult.","Thiết bị cá nhân (máy tính, điện thoại, máy tính bảng) cần được bảo vệ như tài sản riêng: khóa màn hình, cài phần mềm chính hãng, không cắm USB lạ, cập nhật thường xuyên.":"Personal devices (computers, phones and tablets) should be protected like personal property: lock the screen, use legitimate software, do not plug in unknown USB drives and update regularly.","Không nhập mật khẩu vào trang web không rõ nguồn gốc. Nếu nghi ngờ tài khoản bị lộ, hãy báo người lớn đáng tin cậy và thực hiện các bước khôi phục tài khoản của dịch vụ.":"Do not enter passwords on websites from unclear sources. If you suspect an account has been exposed, tell a trusted adult and follow the service’s account-recovery steps.","Là quy trình kiểm tra thông tin thật hay sai: đọc kỹ nội dung, kiểm tra ngày tháng, tìm nguồn gốc, đối chiếu với trang uy tín, hỏi cơ quan hoặc chuyên gia có thẩm quyền.":"It is a process for checking whether information is true or false: read carefully, check dates, find the original source, compare with reputable sites, and ask an authoritative organization or expert when needed.","Mỗi thông tin (bài báo, trạng thái, hình ảnh) đều có nguồn gốc (website, tác giả, tổ chức). Nhận diện nguồn tin là biết đánh giá độ tin cậy của nơi cung cấp thông tin.":"Every piece of information (article, post or image) has an origin (website, author or organization). Source evaluation means assessing how trustworthy the provider is.","Mỗi nhóm vẽ poster một “gương mặt tin giả” kèm cách phát hiện. Infographic “Ba lớp phòng thủ”: kiểm chứng nguồn, công nghệ (tìm ảnh ngược) và sự cảnh giác cá nhân.":"Each group draws a “fake-news face” poster with ways to detect it. Infographic “Three layers of defense”: source verification, technology (reverse-image search) and personal caution.","Một tài khoản lạ hỏi: “Em học lớp nào? Nhà ở đâu? Gửi ảnh trường cho anh/chị xem nhé.” Không cần trả lời. Có thể chặn tài khoản và báo người lớn nếu thấy đáng ngờ.":"An unfamiliar account asks: “What class are you in? Where do you live? Send me a photo of your school.” You do not need to answer. Block the account and tell an adult if it seems suspicious.","quyết định ứng dụng được truy cập những thành phần nào của thiết bị như camera, micro, vị trí, ảnh/tệp hoặc danh bạ. Không phải mọi yêu cầu đều cần được chấp nhận.":"determines which parts of the device an app can access, such as the camera, microphone, location, photos/files or contacts. Not every request needs to be accepted.","Không đáp trả bằng cách bắt nạt lại. Mục tiêu đầu tiên là giảm tiếp xúc với hành vi gây hại, giữ bằng chứng cần thiết và tìm một người lớn đáng tin cậy để hỗ trợ.":"Do not respond by bullying back. The first goal is to reduce exposure to harmful behavior, preserve useful evidence and seek help from a trusted adult.","là hành động nói xấu, dọa dẫm, làm nhục, lan tin xấu hoặc phát tán hình ảnh/nội dung gây tổn thương qua tin nhắn, mạng xã hội, email, diễn đàn hoặc nhóm chat.":"is behavior such as insults, threats, humiliation, harmful rumors or distributing hurtful images/content through messages, social media, email, forums or group chats.","Ảnh có lộ thông tin riêng tư không? Có người khác trong ảnh không? Mình đã xin phép chưa? Nếu ảnh tồn tại lâu trên Internet thì mình có thấy ổn không?":"Does the photo reveal private information? Is someone else in it? Have I asked for permission? Would I still be comfortable if the photo stayed online for a long time?","là biết chọn trang phù hợp, kiểm tra liên kết và không hành động vội khi gặp quảng cáo, pop-up, file tải xuống hoặc lời mời có dấu hiệu bất thường.":"means choosing appropriate sites, checking links and not acting quickly when you encounter ads, pop-ups, downloads or unusual invitations.","đăng mật khẩu lên ảnh chụp màn hình, gửi qua nhóm lớp, dùng tên/ngày sinh làm mật khẩu hoặc để trình duyệt lưu mật khẩu trên máy tính dùng chung.":"posting passwords in screenshots, sending them to class groups, using a name/birthday as a password, or letting a browser save passwords on a shared computer.","Một thông tin nhỏ như lớp học, số điện thoại, địa điểm hay ảnh riêng tư có thể trở nên nhạy cảm khi ghép với nhiều dữ liệu khác.":"A small piece of information such as a class, phone number, location or private photo can become sensitive when combined with other data.","Mục tiêu không chỉ là tạo mật khẩu khó đoán, mà còn là không để lộ, không dùng lại và tăng thêm lớp bảo vệ cho tài khoản.":"The goal is not only to create a hard-to-guess password, but also to keep it private, avoid reusing it and add another layer of account protection.","cho một ứng dụng ảo: nhóm A tạo app và yêu cầu quyền; nhóm B quyết định quyền nào hợp lý và giải thích lý do. Infographic":"for a mock app: Group A designs the app and requests permissions; Group B decides which permissions are reasonable and explains why. Infographic"," trả đũa, tạo tài khoản giả để xúc phạm lại, đăng thông tin riêng tư của người bắt nạt hoặc rủ thêm người vào công kích.":" retaliate, create a fake account to insult them back, post the bully’s private information or recruit others to attack.",": Khắc – không lưu mật khẩu công khai; Khảo – kiểm tra độ mạnh; Kiêng – không chia sẻ; Kíp – thay đổi khi nghi bị lộ.":": K: keep it private; K: check strength; K: keep it unshared; K: change it if you suspect exposure.","Nếu em thấy sợ, bị đe dọa, bị lừa hoặc bị bắt nạt trên mạng, hãy kể ngay với cha mẹ hoặc thầy cô. Em cũng có thể gọi":"If you feel scared, threatened, scammed or bullied online, tell your parents or teacher immediately. You can also call",": giáo viên đưa hai ảnh chụp website, học sinh tìm tên miền, cách viết, nút bấm và nội dung bất thường. Infographic":": a teacher provides two website screenshots; students look for the domain, wording, buttons and unusual content. Infographic",": các nhóm ghép mảnh từ/ký tự để tạo mật khẩu an toàn mà không dùng thông tin dễ đoán về bản thân. Infographic":": groups assemble words/characters to create a safe password without using predictable personal information. Infographic","lần ra trang web gốc hoặc tác giả ban đầu; trang cơ quan nhà nước, báo lớn thường đáng tin hơn trang cá nhân.":"trace the original website or author; government sites and established news outlets are often more reliable than personal pages.","“Thấy trên mạng” không có nghĩa là “được phép chia sẻ”. Quyền riêng tư của người khác vẫn cần được tôn trọng.":"“Being online” does not mean “allowed to share.” Other people’s privacy still deserves respect.","Đọc → Hiểu → Chỉ cấp quyền cần thiết. Sau đó có thể kiểm tra lại trong cài đặt quyền riêng tư của thiết bị.":"Read → Understand → Grant only necessary permissions. Then review them again in the device’s privacy settings.",": học sinh đóng vai các tài khoản ảo và quyết định chấp nhận lời mời hay không, đăng bài nào. Infographic":": students role-play fake accounts and decide whether to accept requests and what to post. Infographic","Một quảng cáo ghi “Bạn là người thứ 1.000. Hãy nhập số điện thoại để nhận quà”. Quy tắc an toàn:":"An ad says “You are the 1,000th visitor. Enter your phone number to receive a prize.” Safety rule:","Cần chú ý điều kiện độ tuổi, tài khoản giả mạo, lừa đảo, bình luận độc hại và quyền riêng tư.":"Pay attention to age requirements, fake accounts, scams, harmful comments and privacy.","Một người tự xưng là bạn cùng lớp nhắn: “Cho mình mật khẩu để mình đăng nhập thử cho vui.”":"Someone claiming to be a classmate messages: “Give me your password so I can log in for fun.”","Biết người → Kiểm tra tài khoản → Giữ riêng tư → Nghĩ trước khi đăng → Báo khi có vấn đề.":"Know the person → Check the account → Protect privacy → Think before posting → Report problems.","video chỉ có trên mạng xã hội mà không có kênh chính thống xác nhận thì cần thận trọng.":"a video that appears only on social media with no reputable channel confirming it should be treated cautiously.","một số công cụ có thể giúp phát hiện chỉnh sửa, nhưng kết quả chỉ mang tính tham khảo.":"some tools can help detect edits, but their results are only indicative.",": diễn một tình huống bị bắt nạt ảo rồi thảo luận cảm xúc và cách xử lý. Infographic":": act out an online-bullying situation and discuss feelings and responses. Infographic",": mỗi chữ gắn với một lời khuyên; ví dụ A: “Âm thầm chia sẻ khó khăn với người lớn”.":": each letter carries one tip; for example, A: “Quietly share difficulties with an adult.”","tên tổ chức uy tín, ngày đăng; quá cũ hoặc không có đơn vị chính thức thì nghi ngờ.":"the name of a reputable organization and the publication date; if it is very old or has no official organization, be cautious.","(miễn phí, hoạt động cả ngày lẫn đêm). Khi có nguy hiểm khẩn cấp, hãy gọi công an.":"(free, available day and night). In an immediate emergency, call the police.","deepfake khó nhận ra bằng mắt thường, nên hãy hỏi thầy cô, phụ huynh khi nghi ngờ.":"deepfakes can be difficult to identify by sight alone, so ask a teacher or parent when you are unsure.","Một ứng dụng máy tính cầm tay yêu cầu camera, micro, danh bạ và vị trí. Hãy hỏi:":"A calculator app asks for camera, microphone, contacts and location. Ask:","dùng mã PIN/mật khẩu/vân tay; không dùng máy của người khác khi chưa đăng xuất.":"use a PIN/password/fingerprint; never use someone else’s device without signing them out first.","không phát tán nội dung xúc phạm, không xâm phạm quyền riêng tư của người khác.":"do not spread insulting content or violate another person’s privacy.","tìm một đoạn trong tin; nếu là tin thật thường sẽ có trên nhiều trang uy tín.":"search for a distinctive excerpt; genuine news is often reported by multiple reputable sites.","chỉ truy cập trang do thầy cô gợi ý, không cài phần mềm lạ tại phòng máy.":"only visit sites recommended by teachers and do not install unfamiliar software on school computers.","chưa đủ tuổi thì không tự lập tài khoản; nếu dùng cần có cha mẹ quản lý.":"if you are under the required age, do not create the account yourself; if access is allowed, have a parent supervise it.","hoặc giọng người thân đột ngột khác thường – hãy xác minh qua kênh khác.":"or a relative’s voice suddenly sounds unusual — verify through another channel.",": Đúng, Đủ nghiêm túc, Đủ riêng tư, Đủ cẩn trọng, Đúng phép (hỏi ý).":": Accurate, Appropriate, Private, Careful and Permission-aware.","Mật khẩu là thông tin riêng tư, không phải bằng chứng của tình bạn.":"A password is private information, not proof of friendship.","dùng tìm kiếm, hỏi người có chuyên môn hoặc xem trang kiểm chứng.":"use search, ask a knowledgeable person or consult a fact-checking page.","tìm kiếm ảnh ngược của Google, các trang fact-check của báo chí.":"use Google reverse-image search and journalism fact-check pages.","hình ảnh thiếu tự nhiên, giọng nói lạ là dấu hiệu cần kiểm tra.":"unnatural visuals or unusual voices are signs that need checking.","quy định trách nhiệm bảo vệ trẻ em, kể cả trên môi trường mạng;":"set responsibilities for protecting children, including in online environments;","cha mẹ, thầy cô hướng dẫn kỹ năng và giúp phòng tránh rủi ro.":"parents and teachers guide skills and help prevent risks.","hỏi thầy cô, phụ huynh hoặc xem các trang kiểm chứng tin tức.":"ask a teacher or parent, or check reputable fact-checking pages.","tin chỉ xuất hiện ở một trang không rõ tên thì cần nghi ngờ.":"a claim appearing only on an unclear site should be treated with suspicion.","tiêu đề giật gân, in hoa toàn bộ là dấu hiệu cần cảnh giác.":"a sensational all-caps headline is a warning sign.","cài bản cập nhật hệ điều hành mới nhất để sửa lỗi bảo mật.":"install the latest operating-system updates to fix security issues.","Google Play, App Store hoặc hệ thống do trường chỉ định.":"Google Play, the App Store or a system designated by the school.","“Thông tin này có giúp ích gì không?” trước khi chia sẻ.":"“Will this information actually help?” before sharing.",": dừng lại đọc, nói với người lớn, chọn quyền cẩn thận.":": stop and read, tell an adult, and choose permissions carefully.","tránh các trang có nội dung bạo lực, khiêu dâm, cờ bạc.":"avoid sites with violent, sexual or gambling content.","không chia sẻ, thích, bình luận khi chưa rõ thông tin.":"do not share, like or comment when the information is still unclear.","hoặc quảng bá quá mạnh mẽ, đặc biệt trên mạng xã hội.":"or is promoted too aggressively, especially on social media.","giảm để người khác cài ứng dụng lạ vào máy của em.":"avoid letting others install unfamiliar apps on your device.","Ở Việt Nam, trẻ em được pháp luật bảo vệ đặc biệt.":"In Vietnam, children receive special legal protection.","website là đáng tin cậy. Vẫn phải kiểm tra nguồn.":"the website is trustworthy. You still need to check the source.","dùng phần mềm do trường hoặc gia đình cung cấp.":"use security software provided by the school or family.","luôn áp dụng “Kiểm chứng trước khi chia sẻ”.":"always apply “Verify before sharing.”","nên bị bạn trong lớp vào đăng bình luận phá.":"is then disrupted by a classmate posting harmful comments.","(chỉ đúng một phần hoặc dùng thông tin cũ),":"(only partly true or based on old information),","(nối các sự kiện không có căn cứ khoa học).":"(links events without scientific support).","Biểu tượng khóa/HTTPS chỉ bảo vệ kết nối,":"The lock icon/HTTPS only protects the connection,","cha mẹ, thầy cô hoặc cơ quan chính thức.":"parents, teachers or official organizations.","dùng hình “lưới sắt” để minh họa bộ lọc.":"use a “metal mesh” illustration to represent the filter.","(không dẫn chứng, lan qua nhóm chat),":"(unsupported and spread through group chats),","Trí tuệ nhân tạo (AI) có thể tạo ra":"Artificial intelligence (AI) can create","Kiểm tra một liên kết trước khi mở":"Check a link before opening it",", nhất là trên mạng xã hội.":", especially on social media.","Trước khi đăng một nội dung":"Before posting content","Hiểu quyền theo chức năng":"Understand permissions by function","Anh Quân đặt mật khẩu là":"Anh Quân sets his password to","App gọi video có thể cần":"A video-call app may need","App chụp ảnh có thể cần":"A camera app may need","Nhóm mô phỏng quy trình":"Permission process simulation","(chỉnh sửa, deepfake),":"(edited or deepfake),","Thông tin cần cẩn thận":"Information to handle carefully","Tin giả có nhiều dạng:":"Fake news can take many forms:","5 việc cần hoàn thành":"5 tasks to complete","App bản đồ có thể cần":"A map app may need","Hoạt động/Infographic":"Activity/Infographic","by codedev - hvy":"by codedev - hvy","Chưa hoàn thành":"Not completed","Đã hoàn thành:":"Completed:","Ví dụ gần gũi":"Relatable example","trả đũa, tạo tài khoản giả để xúc phạm lại, đăng thông tin riêng tư của người bắt nạt hoặc rủ thêm người vào công kích.":"retaliate, create a fake account to insult them back, post the bully’s private information or recruit others to attack.","tránh để người khác cài ứng dụng lạ vào máy của em":"avoid letting others install unfamiliar apps on your device."});
     Object.assign(AUTO_EN,{"tránh để người khác cài ứng dụng lạ vào máy của em.":"avoid letting others install unfamiliar apps on your device.","Giải thích":"Explanation","Tình huống":"Scenario","Hoạt cảnh":"Role-play","Trò chơi":"Activity","Ví dụ":"Example","Website":"Website","123456":"123456","Poster":"Poster","by Huy":"by Huy","TO-DO":"TO-DO","Lê Đức Huy":"Lê Đức Huy","Kỷ lục: —":"Best: —","0/30":"0/30","0/5":"0/5","0/6":"0/6","0/7":"0/7","111":"111","113":"113","/5":"/5","01":"01","02":"02","03":"03","04":"04","05":"05","06":"06","07":"07","08":"08","09":"09","10":"10","11":"11","12":"12","html":"HTML","👨‍👩‍👧":"👨‍👩‍👧","🧑‍🤝‍🧑":"🧑‍🤝‍🧑","Progress: 0%":"Progress: 0%"});
-  Object.assign(AUTO_EN,{'và':'and'});
-  const SKILL_DATA=[{"name_vi": "01 Mật khẩu và tài khoản an toàn", "name_en": "01 Safe passwords and accounts", "items_vi": ["Tạo mật khẩu dài (ít nhất 8 ký tự, nên từ 12), pha trộn chữ số, chữ hoa, chữ thường và ký tự đặc biệt.", "Không chia sẻ mật khẩu cho bạn bè, người lạ; chỉ chia sẻ với cha mẹ khi thật cần thiết.", "Đổi mật khẩu ngay khi nghi ngờ bị lộ hoặc có thông báo đăng nhập lạ.", "Không dùng chung một mật khẩu cho nhiều tài khoản.", "Ghi mật khẩu ở nơi an toàn, riêng tư và bật xác thực 2 bước (2FA) khi dịch vụ hỗ trợ."], "items_en": ["Create long passwords (at least 8 characters, preferably 12+), mixing numbers, uppercase and lowercase letters, and special characters.", "Do not share passwords with friends or strangers; share them with a parent only when truly necessary.", "Change a password immediately if you suspect it was exposed or see an unfamiliar login alert.", "Do not reuse the same password across multiple accounts.", "Keep passwords in a safe private place and enable two-step verification (2FA) when the service supports it."]}, {"name_vi": "02 Quyền riêng tư cá nhân", "name_en": "02 Personal privacy", "items_vi": ["Không đưa thông tin cá nhân như địa chỉ nhà, lớp học, số điện thoại, ảnh riêng tư lên Internet khi chưa hỏi phép người lớn.", "Chỉ chia sẻ các nội dung lành mạnh và đã xin phép cha mẹ.", "Kiểm tra cài đặt riêng tư trên mạng xã hội: chỉ bạn bè quen biết mới xem được thông tin của em.", "Nhớ đăng xuất khi dùng máy tính chung (ở trường, quán net, nhà bạn).", "Báo với cha mẹ hoặc giáo viên nếu thấy ai đó công khai ảnh hoặc thông tin riêng tư của em khi chưa được phép."], "items_en": ["Do not put personal information such as your home address, class, phone number or private photos on the Internet without asking an adult.", "Share only appropriate content and ask a parent for permission first.", "Check social-media privacy settings so only people you know can see your information.", "Remember to sign out when using a shared computer at school, a cybercafé or a friend’s home.", "Tell a parent or teacher if someone publishes your photo or private information without permission."]}, {"name_vi": "03 Bắt nạt qua mạng", "name_en": "03 Cyberbullying", "items_vi": ["Không tham gia bàn tán, chia sẻ tin đồn hoặc bình luận xấu về bạn bè, dù chỉ là “cho vui”.", "Luôn trả lời lịch sự, tôn trọng khi tranh luận; không dùng từ ngữ xúc phạm.", "Nếu thấy bạn hoặc người khác bị bắt nạt, báo ngay cho giáo viên hoặc phụ huynh để được giúp đỡ.", "Giữ bằng chứng (chụp màn hình) nếu bị bắt nạt để người lớn hỗ trợ xử lý.", "Dùng tính năng chặn, báo cáo trên mạng xã hội nếu bị quấy rối; không đáp trả bằng lời lẽ xúc phạm."], "items_en": ["Do not join gossip, spread rumors or post hurtful comments about friends, even “for fun.”", "Reply politely and respectfully during disagreements; do not use insulting language.", "If you see someone being bullied, tell a teacher or parent so they can help.", "Keep evidence such as screenshots if you are bullied so an adult can help address it.", "Use block and report tools if you are harassed; do not respond with insults."]}, {"name_vi": "04 Duyệt web an toàn", "name_en": "04 Safe web browsing", "items_vi": ["Chỉ truy cập trang web tin cậy (trang cơ quan nhà nước, báo chính thống, website của trường, trang giáo dục).", "Không bấm vào link lạ trong email, tin nhắn, quảng cáo hoặc pop-up nếu không chắc chắn.", "Khi đọc tin tức, kiểm chứng với nhiều nguồn khác nhau (tìm kiếm, hỏi thầy cô) trước khi tin hoặc chia sẻ.", "Bật bộ lọc nội dung (SafeSearch, tường lửa của nhà trường) để tránh trang độc hại.", "Rời khỏi trang ngay nếu thấy nội dung không phù hợp và báo cho giáo viên hoặc cha mẹ."], "items_en": ["Use trusted websites such as government agencies, established news outlets, your school website and educational sites.", "Do not click unfamiliar links in email, messages, ads or pop-ups when you are unsure.", "When reading news, verify it with multiple sources or ask a teacher before believing or sharing it.", "Use content filters such as SafeSearch and school network protections to avoid harmful pages.", "Leave the site if the content is inappropriate and tell a teacher or parent."]}, {"name_vi": "05 Quyền và cấp phép ứng dụng", "name_en": "05 App permissions", "items_vi": ["Đọc kỹ yêu cầu cấp phép: ứng dụng học tập thường không cần micro; game online không cần vị trí GPS.", "Chỉ cấp quyền khi cần thiết: app chụp ảnh thì cấp camera, app gọi thoại thì cấp micro.", "Nếu app đòi quá nhiều quyền không liên quan (danh bạ, vị trí, tệp), dừng cài đặt và hỏi người lớn.", "Luôn cập nhật hệ điều hành và ứng dụng để vá lỗ hổng bảo mật.", "Dùng phần mềm bảo vệ do trường hoặc gia đình cung cấp để quét các app lạ."], "items_en": ["Read permission requests carefully: a study app usually does not need your microphone, and an online game usually does not need GPS location.", "Grant permissions only when necessary: a camera app needs camera access, a voice-call app needs microphone access.", "If an app asks for unrelated permissions such as contacts, location or files, stop installing it and ask an adult.", "Keep the operating system and apps updated to patch security weaknesses.", "Use security software provided by school or family to scan unfamiliar apps."]}, {"name_vi": "06 Mạng xã hội cơ bản", "name_en": "06 Social media basics", "items_vi": ["Tuân thủ độ tuổi đăng ký: nếu nền tảng quy định từ 13 tuổi, hãy đợi hoặc có cha mẹ giám sát.", "Chỉ kết bạn với người quen (bạn cùng lớp, họ hàng) và kiểm tra kỹ tài khoản mới.", "Không chia sẻ mật khẩu hoặc ảnh riêng tư cho bạn bè trên mạng.", "Luôn cư xử văn minh: không chửi bới, bịa đặt, tôn trọng bạn bè.", "Tìm hiểu thiết lập riêng tư: ví dụ chỉ cho bạn bè nhìn thấy bài đăng."], "items_en": ["Follow the platform’s age rules; if it requires age 13+, wait or use appropriate parental supervision.", "Accept requests mainly from people you know and check unfamiliar accounts carefully.", "Do not share passwords or private photos with friends online.", "Be respectful: do not insult or fabricate stories about others.", "Learn privacy settings, such as limiting posts to friends."]}];
+  const SKILL_DATA=[
+    {name_vi:'01 Mật khẩu và tài khoản an toàn',name_en:'01 Safe passwords and accounts',items_vi:[
+      'Kiểm tra các tài khoản đang dùng mật khẩu dễ đoán hoặc dùng lại ở nhiều nơi.',
+      'Đổi mật khẩu khi nghi ngờ bị lộ hoặc có cảnh báo đăng nhập bất thường.',
+      'Bật xác thực đa yếu tố (MFA/2FA) nếu dịch vụ hỗ trợ.',
+      'Không chia sẻ mật khẩu, mã xác minh hoặc mã khôi phục cho người khác qua tin nhắn.',
+      'Biết cách đăng xuất và báo người lớn khi phát hiện hoạt động lạ trên tài khoản.'
+    ],items_en:[
+      'Review accounts that use easy-to-guess or reused passwords.',
+      'Change a password if you suspect it was exposed or see an unfamiliar login alert.',
+      'Turn on multi-factor authentication (MFA/2FA) when the service supports it.',
+      'Never share passwords, verification codes or recovery codes through messages.',
+      'Know how to sign out and tell an adult when you notice unusual account activity.'
+    ]},
+    {name_vi:'02 Quyền riêng tư cá nhân',name_en:'02 Personal privacy',items_vi:[
+      'Kiểm tra hồ sơ và bài đăng đang công khai những thông tin cá nhân nào.',
+      'Hạn chế công khai địa chỉ, số điện thoại, lịch học, vị trí và ảnh riêng tư không cần thiết.',
+      'Trước khi đăng ảnh có người khác, cân nhắc sự riêng tư và sự đồng ý của họ.',
+      'Không công khai mật khẩu, mã xác minh, mã QR hoặc giấy tờ có thông tin nhận dạng.',
+      'Báo cha mẹ hoặc giáo viên nếu ai đó đăng thông tin riêng tư của em khi chưa được phép.'
+    ],items_en:[
+      'Review which personal details are public on your profile and posts.',
+      'Limit unnecessary exposure of your address, phone number, schedule, location and private photos.',
+      'Before posting photos of others, consider their privacy and permission.',
+      'Never publish passwords, verification codes, QR codes or identifying documents.',
+      'Tell a parent or teacher if someone posts your private information without permission.'
+    ]},
+    {name_vi:'03 Bắt nạt qua mạng',name_en:'03 Cyberbullying',items_vi:[
+      'Không tham gia bình luận, chia sẻ hoặc phản ứng làm nội dung gây hại lan rộng hơn.',
+      'Giữ lại bằng chứng cần thiết như ảnh chụp màn hình khi xảy ra quấy rối hoặc bắt nạt.',
+      'Biết cách chặn và báo cáo tài khoản hoặc nội dung gây hại trên nền tảng.',
+      'Không trả đũa bằng lời xúc phạm, tài khoản giả hoặc công khai thông tin riêng tư của người khác.',
+      'Chủ động báo một người lớn đáng tin cậy khi em hoặc bạn khác gặp vấn đề.'
+    ],items_en:[
+      'Do not join comments, sharing or reactions that help harmful content spread.',
+      'Keep necessary evidence such as screenshots when harassment or bullying occurs.',
+      'Know how to block and report harmful accounts or content on the platform.',
+      'Do not retaliate with insults, fake accounts or someone else’s private information.',
+      'Tell a trusted adult when you or another student faces a problem.'
+    ]},
+    {name_vi:'04 Duyệt web an toàn',name_en:'04 Safe web browsing',items_vi:[
+      'Kiểm tra tên miền và đường dẫn trước khi mở một liên kết.',
+      'Không bấm liên kết, tải tệp hoặc cài chương trình từ nguồn bất ngờ khi chưa xác minh.',
+      'Không nhập mật khẩu, mã xác minh hoặc dữ liệu cá nhân vào trang chưa rõ nguồn.',
+      'Khi gặp quảng cáo hoặc phần thưởng bất ngờ, dừng lại và kiểm tra nguồn thay vì làm theo ngay.',
+      'Rời khỏi trang khi thấy nội dung nguy hiểm hoặc không phù hợp và hỏi người lớn.'
+    ],items_en:[
+      'Check the domain and URL before opening a link.',
+      'Do not click unexpected links, download files or install programs before verifying the source.',
+      'Do not enter passwords, verification codes or personal data on unclear websites.',
+      'When you see an unexpected prize or ad, stop and check the source instead of acting immediately.',
+      'Leave unsafe or inappropriate pages and ask an adult for help.'
+    ]},
+    {name_vi:'05 Quyền và cấp phép ứng dụng',name_en:'05 App permissions',items_vi:[
+      'Xem quyền camera, micro, vị trí, ảnh/tệp và danh bạ mà ứng dụng đang yêu cầu.',
+      'Chỉ cấp quyền phù hợp với chức năng thật sự cần thiết của ứng dụng.',
+      'Thu hồi quyền không còn cần thiết trong phần cài đặt quyền riêng tư của thiết bị.',
+      'Dừng cài đặt và hỏi người lớn nếu ứng dụng yêu cầu nhiều quyền không liên quan.',
+      'Cập nhật hệ điều hành và ứng dụng từ nguồn chính thức.'
+    ],items_en:[
+      'Review camera, microphone, location, photo/file and contact permissions requested by apps.',
+      'Grant only permissions that are necessary for the app’s function.',
+      'Revoke permissions that are no longer needed in device privacy settings.',
+      'Stop and ask an adult if an app requests many unrelated permissions.',
+      'Update the operating system and apps from official sources.'
+    ]},
+    {name_vi:'06 Mạng xã hội cơ bản',name_en:'06 Social media basics',items_vi:[
+      'Kiểm tra quy định độ tuổi và cài đặt quyền riêng tư của nền tảng.',
+      'Không tin tài khoản lạ chỉ vì tên hoặc ảnh đại diện giống người quen.',
+      'Không chia sẻ mật khẩu, mã xác minh hoặc ảnh riêng tư qua mạng xã hội.',
+      'Trước khi đăng hoặc chia sẻ, kiểm tra sự chính xác, bối cảnh và dữ liệu cá nhân có bị lộ không.',
+      'Cư xử tôn trọng; không hùa theo tin đồn hoặc nội dung xúc phạm người khác.'
+    ],items_en:[
+      'Check the platform age requirement and privacy settings.',
+      'Do not trust an unfamiliar account just because its name or profile photo looks familiar.',
+      'Never share passwords, verification codes or private photos through social media.',
+      'Before posting or sharing, check accuracy, context and whether personal data is exposed.',
+      'Be respectful and do not join rumors or insulting content.'
+    ]},
+    {name_vi:'07 An toàn thiết bị',name_en:'07 Device security',items_vi:[
+      'Đặt khóa màn hình trên điện thoại, máy tính bảng hoặc máy tính cá nhân.',
+      'Cập nhật hệ điều hành và ứng dụng khi có bản cập nhật bảo mật chính thức.',
+      'Không cho người khác tự ý cài ứng dụng hoặc phần mềm lạ trên thiết bị của em.',
+      'Đăng xuất khỏi tài khoản khi sử dụng máy tính dùng chung.',
+      'Báo người lớn khi thiết bị xuất hiện ứng dụng, cửa sổ hoặc hoạt động bất thường.'
+    ],items_en:[
+      'Use a screen lock on your phone, tablet or personal computer.',
+      'Install official operating-system and app security updates.',
+      'Do not let others install unfamiliar apps or software on your device without permission.',
+      'Sign out of accounts when using a shared computer.',
+      'Tell an adult when your device shows unusual apps, pop-ups or activity.'
+    ]},
+    {name_vi:'08 Kiểm tra nguồn và thông tin',name_en:'08 Source and information checking',items_vi:[
+      'Xác định ai là người hoặc tổ chức đăng thông tin.',
+      'Tìm nguồn gốc ban đầu thay vì chỉ đọc ảnh chụp màn hình hoặc bài đăng sao chép.',
+      'Kiểm tra ngày đăng và bối cảnh để tránh tin cũ hoặc thông tin bị đặt sai thời điểm.',
+      'Đối chiếu với ít nhất một nguồn độc lập đáng tin cậy khi thông tin quan trọng hoặc gây tranh cãi.',
+      'Không chia sẻ khi chưa đủ bằng chứng để xác nhận.'
+    ],items_en:[
+      'Identify the person or organization that published the information.',
+      'Look for the original source instead of relying only on screenshots or copied posts.',
+      'Check the date and context to avoid old or miscontextualized information.',
+      'Cross-check with at least one independent reliable source for important or disputed claims.',
+      'Do not share when there is not enough evidence to confirm the claim.'
+    ]},
+    {name_vi:'09 Quy trình kiểm chứng tin giả',name_en:'09 Fake-news verification',items_vi:[
+      'Đọc toàn bộ nội dung thay vì chỉ dựa vào tiêu đề giật gân.',
+      'Kiểm tra nguồn, tác giả hoặc tổ chức và đường dẫn gốc.',
+      'Kiểm tra ngày tháng, địa điểm và bối cảnh của thông tin.',
+      'Đối chiếu bằng chứng với nguồn uy tín khác hoặc nguồn chính thức.',
+      'Khi còn nghi ngờ, dừng chia sẻ và hỏi thầy cô, cha mẹ hoặc người có chuyên môn.'
+    ],items_en:[
+      'Read the full content instead of relying on a sensational headline.',
+      'Check the source, author or organization and the original link.',
+      'Check the date, place and context of the claim.',
+      'Compare the evidence with other reliable or official sources.',
+      'When unsure, stop sharing and ask a teacher, parent or knowledgeable adult.'
+    ]},
+    {name_vi:'10 Các loại tin giả phổ biến',name_en:'10 Common misinformation types',items_vi:[
+      'Phân biệt tin đồn, thông tin sai lệch, nội dung bị cắt ghép và nội dung bị đặt sai bối cảnh.',
+      'Cảnh giác với tin nhắn dây chuyền dựa vào nỗi sợ, phần thưởng hoặc yêu cầu chia sẻ hàng loạt.',
+      'Không coi một bức ảnh hoặc video là bằng chứng đủ để xác nhận cả câu chuyện.',
+      'Kiểm tra nguồn và bối cảnh trước khi bình luận hoặc chia sẻ nội dung gây tranh cãi.',
+      'Tự hỏi: “Mình đã kiểm chứng đủ chưa?” trước khi giúp nội dung lan rộng.'
+    ],items_en:[
+      'Distinguish rumors, misinformation, edited content and content used out of context.',
+      'Be careful with chain messages based on fear, rewards or mass-sharing requests.',
+      'Do not treat a single photo or video as enough evidence for the whole story.',
+      'Check the source and context before commenting on or sharing disputed content.',
+      'Ask yourself, “Have I verified enough?” before helping content spread.'
+    ]},
+    {name_vi:'11 AI và Deepfake',name_en:'11 AI and deepfakes',items_vi:[
+      'Không kết luận nội dung là AI chỉ dựa vào một dấu hiệu nhìn bằng mắt thường.',
+      'Kiểm tra nguồn gốc, ngày đăng và bối cảnh của ảnh, video hoặc âm thanh.',
+      'Tìm nguồn độc lập hoặc kênh chính thức để xác nhận một nội dung gây sốc.',
+      'Khi công cụ phát hiện AI cho kết quả, xem đó là tín hiệu hỗ trợ chứ không phải bằng chứng tuyệt đối.',
+      'Với giọng nói/hình ảnh đáng ngờ của người quen, xác minh qua một kênh liên lạc khác trước khi hành động.'
+    ],items_en:[
+      'Do not label content as AI-generated based on one visual clue alone.',
+      'Check the origin, date and context of an image, video or audio clip.',
+      'Look for an independent or official source to confirm shocking content.',
+      'Treat AI-detection tools as supporting signals, not absolute proof.',
+      'For suspicious voice or image requests from someone you know, verify through another communication channel.'
+    ]},
+    {name_vi:'12 Pháp lý và đạo đức trên môi trường mạng',name_en:'12 Legal and ethical online conduct',items_vi:[
+      'Tôn trọng quyền riêng tư, danh dự và hình ảnh của người khác trước khi đăng hoặc chia sẻ.',
+      'Không phát tán nội dung biết là sai sự thật, xúc phạm hoặc gây hại cho người khác.',
+      'Tuân thủ độ tuổi và điều khoản sử dụng của nền tảng; khi chưa rõ hãy hỏi cha mẹ hoặc giáo viên.',
+      'Tuân thủ nội quy nhà trường khi sử dụng thiết bị, mạng và phòng máy.',
+      'Khi gặp tình huống có rủi ro pháp lý hoặc gây hại, không tự xử lý nóng vội; báo người lớn đáng tin cậy.'
+    ],items_en:[
+      'Respect other people’s privacy, reputation and image before posting or sharing.',
+      'Do not spread content that you know is false, insulting or harmful to others.',
+      'Follow platform age requirements and terms; ask a parent or teacher when unsure.',
+      'Follow school rules when using devices, networks and computer rooms.',
+      'For situations involving legal or serious harm, do not react impulsively; tell a trusted adult.'
+    ]}
+  ];
   const LEVELS={"tieuhoc": {"vi": ["Không chia sẻ thông tin cá nhân (họ tên, địa chỉ, lớp, số điện thoại) trên mạng.", "Hỏi ý cha mẹ trước khi kết bạn với người lạ hoặc tải game/app mới.", "Dùng mật khẩu khó đoán (có cả chữ và số), không đặt bằng tên hay ngày sinh; nhờ bố mẹ giúp nếu cần.", "Tôn trọng bạn bè, không bình luận xấu. Báo ngay thầy cô/gia đình nếu bị hoặc thấy người khác bị bắt nạt.", "Thoát khỏi trang web nếu thấy quảng cáo hoặc thông tin lạ, hỏi người lớn nếu không chắc.", "Nếu thấy điều gì khiến em lo sợ hoặc khó chịu trên mạng, hãy kể ngay với người lớn em tin tưởng."], "en": ["Do not share personal information such as your full name, address, class or phone number online.", "Ask a parent before accepting a friend request from a stranger or downloading a new game/app.", "Use a hard-to-guess password with letters and numbers; do not base it on your name or birthday; ask a parent for help when needed.", "Respect classmates and do not post hurtful comments. Tell a teacher or family member if you are bullied or see someone being bullied.", "Leave a website if an ad or unfamiliar content appears; ask an adult when you are unsure.", "Tell a trusted adult if something online makes you feel scared, worried or uncomfortable."]}, "thcs": {"vi": ["Dùng mật khẩu mạnh (từ 8 ký tự, có ký tự đặc biệt), riêng cho từng tài khoản; bật xác thực 2 bước khi có thể.", "Kiểm tra kỹ nguồn tin, trang web chính thống (cơ quan, báo chí) trước khi tin và chia sẻ.", "Thiết lập riêng tư trên mạng xã hội (không công khai nội dung cá nhân).", "Không mở link lạ, trang web không rõ nguồn; dùng phần mềm diệt virus và tường lửa.", "Tuân thủ pháp luật và nội quy trường: không chia sẻ nội dung vi phạm, không tạo tài khoản nếu chưa đủ tuổi.", "Áp dụng “DỪNG – KIỂM TRA – BẢO VỆ”: không chắc thì không chia sẻ."], "en": ["Use a strong password (8+ characters with special characters) for each account and enable two-step verification when possible.", "Check sources and official websites such as agencies and established news outlets before believing or sharing information.", "Use private social-media settings and avoid making personal posts public.", "Do not open unfamiliar links or unclear websites; use security software and firewall protections.", "Follow laws and school rules: do not share prohibited content or create accounts before meeting the platform’s age requirement.", "Use “STOP – CHECK – PROTECT”: when you are unsure, do not share."]}};
+
+
+  function renderSkillActionBoard(){
+    const list=$('#skillBoardList'); if(!list) return;
+    const lang=currentLang==='en'?'en':'vi';
+    list.innerHTML=SKILL_DATA.map((item,i)=>{
+      const title=item[lang==='en'?'name_en':'name_vi'];
+      const tasks=item[lang==='en'?'items_en':'items_vi'];
+      return `<article class="skill-board-item" data-board-skill="${i}">
+        <input class="skill-board-check" type="checkbox" aria-label="${title}">
+        <div class="skill-board-main">
+          <div class="skill-board-title"><span class="skill-board-ico">${['🔐','🛡️','🧑‍🤝‍🧑','🌐','📱','📲','💻','🔎','🧭','📰','🤖','⚖️'][i]}</span><strong>${title}</strong></div>
+          <p class="skill-board-preview">${lang==='en'?'5 detailed actions inside this skill card.':'5 việc thực hành chi tiết nằm trong thẻ kỹ năng.'}</p>
+        </div>
+        <div class="skill-board-meta"><span class="skill-board-count">0/5</span><button type="button" class="skill-board-open">${lang==='en'?'Open skill card ↗':'Mở thẻ kỹ năng ↗'}</button></div>
+      </article>`;
+    }).join('');
+
+    $$('.skill-board-check').forEach(input=>{
+      input.addEventListener('change',()=>{
+        const row=input.closest('[data-board-skill]'); const s=Number(row?.dataset.boardSkill);
+        if(Number.isNaN(s)) return;
+        const items=SKILL_DATA[s]?.vi||[];
+        items.forEach((_,i)=>input.checked?store.set(todoKey(s,i),'1'):store.del(todoKey(s,i)));
+        $$('.skill-checklist[data-skill="'+s+'"] input').forEach(x=>x.checked=input.checked);
+        refreshSkillChecklists();
+      });
+    });
+
+    $$('.skill-board-open').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const row=btn.closest('[data-board-skill]'); const s=Number(row?.dataset.boardSkill);
+        const card=$$('.detailed-safety-card')[s];
+        if(card){
+          if(!card.classList.contains('expanded')) toggleCard(card);
+          card.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'center'});
+          card.classList.add('board-focus');
+          setTimeout(()=>card.classList.remove('board-focus'),900);
+        }
+      });
+    });
+  }
+
+  function refreshSkillBoardState(){
+    $$('.skill-board-item').forEach(row=>{
+      const s=Number(row.dataset.boardSkill);
+      const items=SKILL_DATA[s]?.vi||[];
+      const done=items.filter((_,i)=>store.get(todoKey(s,i))==='1').length;
+      const input=$('.skill-board-check',row),count=$('.skill-board-count',row);
+      if(input){input.checked=done===items.length;input.indeterminate=done>0&&done<items.length;}
+      if(count)count.textContent=`${done}/${items.length}`;
+      row.classList.toggle('is-complete',done===items.length&&items.length>0);
+    });
+  }
+
 
   /* ---------- Existing bilingual dictionary, extended for all navigation/UI ---------- */
 const EN={
-    'p0.title': 'Internet Safety & Fake News Recognition', 'p0.scroll': 'Scroll to explore',
+    'p0.title': 'Internet Safety & Fake News Recognition', 'p0.scroll': 'Scroll to explore', 'p0.school': '8A3 — TH&THCS Cao Xanh',
     'nav.checklist': 'School level', 'nav.checklist.1': 'Internet safety checklist', 'nav.checklist.2': 'Daily habits',
     'badge.level': 'Checklist', 'sec.level.title': 'Internet safety checklist by school level',
     'sec.level.sub': 'Pick your level, read each item and tick it once you understand and know how to do it. Progress is saved in this browser. (Items are in Vietnamese.)',
@@ -1497,7 +1810,8 @@ const EN={
     'check.7.title': 'Notes', 'check.7.desc': '(e.g. blue tick, unusual details...)',
     'badge.safety': 'Internet safety', 'sec.safety.title': 'IV. Essential Internet Safety Skills',
     'sec.safety.sub': 'Spotting fake news is only one part of staying safe online. These skills cover accounts, privacy, cyberbullying, browsing, app permissions, social media, devices, sources, fact-checking, AI/deepfakes and legal & ethical basics. (Detailed cards are in Vietnamese.)',
-    'safety.hint': 'Click each card to open the full details.', 'safety.core.title': '6 core safety skills', 'safety.core.sub': 'Each card has an explanation, examples, a tickable checklist, a real scenario and an activity.',
+    'safety.hint': 'Click each card to open the full details.', 'safety.todo.headerNote': 'The 12-skill practice checklist is directly below the skill cards. Tick and untick items as you work.', 'safety.core.title': '6 core safety skills', 'safety.core.sub': 'Each card has an explanation, examples, a tickable checklist, a real scenario and an activity.',
+    'safety.todo.label': 'PRACTICE TO-DO', 'safety.todo.title': '6 practical goals to turn knowledge into habits', 'safety.todo.sub': 'This board does not create a second scoring system. Each “Complete” box checks the five detailed tasks inside the same skill, so the progress bar above always reflects the same 30 practice tasks.', 'safety.todo.note': 'Tip: work on one skill at a time. You do not need to finish everything in one session; what matters is that after checking a task, you actually know what to do in a similar situation.', 'safety.todo.reset': '↺ Clear all Section IV tasks', 'safety.todo.sources': 'References used to build the practice tasks:', 'safety.todo.originality': 'The wording on this board is independently written and synthesized by the project; the links are provided for verification and are not copied verbatim.' ,
     'safety.ext.title': '6 extended topics', 'safety.ext.sub': 'Topics 7–12 add depth for study, presentations or printing.',
     'print.title': 'Printable checklist by grade', 'print.sub': 'Print each page in a side column, using colors and symbols. Example: a lock icon next to passwords.',
     'badge.media': 'AI & Media', 'sec.media.title': 'V. Photos, videos and AI-generated or edited content', 'sec.media.sub': 'Something that looks very real is not necessarily real.',
@@ -1545,18 +1859,25 @@ const EN={
     'footer.copy': '© 2026 Lê Đức Huy – TH&THCS Cao Xanh.', 'footer.update': 'Last updated: 30/09/2026'
   };
 
-  // Capture VI source text for static nodes that are not already governed by data-i18n.
+  // Robust text-node i18n fallback for static text that predates data-i18n.
   const autoNodes=[];
-  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
-  while(walker.nextNode()){
-    const node=walker.currentNode;
-    const parent=node.parentElement;
-    if(!parent || ['SCRIPT','STYLE','NOSCRIPT'].includes(parent.tagName)) continue;
-    if(parent.closest('[data-i18n]')) continue;
-    const raw=node.nodeValue||'', trimmed=raw.trim();
-    if(!trimmed || !(trimmed in AUTO_EN)) continue;
-    const lead=raw.match(/^\s*/)?.[0]||'', trail=raw.match(/\s*$/)?.[0]||'';
-    autoNodes.push({node,vi:trimmed,en:AUTO_EN[trimmed],lead,trail});
+  const autoReverse=Object.create(null);
+  Object.entries(AUTO_EN).forEach(([vi,en])=>{if(en && autoReverse[en]===undefined) autoReverse[en]=vi;});
+  function captureAutoLanguageNodes(root=document.body){
+    for(let i=autoNodes.length-1;i>=0;i--) if(!autoNodes[i].node.isConnected) autoNodes.splice(i,1);
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    while(walker.nextNode()){
+      const node=walker.currentNode, parent=node.parentElement;
+      if(!parent || ['SCRIPT','STYLE','NOSCRIPT'].includes(parent.tagName)) continue;
+      if(parent.closest('[data-i18n]')) continue;
+      const raw=node.nodeValue||'', trimmed=raw.trim();
+      if(!trimmed) continue;
+      if(autoNodes.some(x=>x.node===node)) continue;
+      const vi=AUTO_EN[trimmed]!==undefined?trimmed:(autoReverse[trimmed]!==undefined?autoReverse[trimmed]:null);
+      if(vi===null) continue;
+      const lead=raw.match(/^\s*/)?.[0]||'', trail=raw.match(/\s*$/)?.[0]||'';
+      autoNodes.push({node,vi,en:AUTO_EN[vi]??trimmed,lead,trail});
+    }
   }
 
   let currentLang=store.get('cx-lang')==='en'?'en':'vi';
@@ -1578,9 +1899,18 @@ const EN={
   }
   applyTheme(currentTheme);
 
-  function runViewTransition(mutate){
+  function runViewTransition(mutate,fadeContent=false){
     if(document.startViewTransition && !reduceNow) return document.startViewTransition(mutate);
-    mutate(); return null;
+    if(fadeContent){
+      body.classList.add('lang-out');
+      requestAnimationFrame(()=>{
+        mutate();
+        requestAnimationFrame(()=>body.classList.remove('lang-out'));
+      });
+    } else {
+      mutate();
+    }
+    return null;
   }
 
   /* ---------- Theme switcher with persisted state ---------- */
@@ -1600,16 +1930,8 @@ const EN={
   /* ---------- i18n: data-i18n + complete static-node translation ---------- */
   $$('[data-i18n]').forEach(el=>{ if(!el.dataset.vi) el.dataset.vi=el.innerHTML; });
   function setAutoLanguage(lang){
+    captureAutoLanguageNodes();
     autoNodes.forEach(x=>x.node.nodeValue=x.lead+(lang==='en'?x.en:x.vi)+x.trail);
-  }
-  function updateDynamicLabels(){
-    const best=store.get('cx-quiz-best');
-    const done=store.get('cx-quiz-completed')==='1';
-    const bestEl=$('#quizBestText'), statusEl=$('#quizStatusText');
-    if(bestEl) bestEl.textContent=(currentLang==='en'?'Best: ':'Kỷ lục: ')+(best||'—');
-    if(statusEl) statusEl.textContent=done?(currentLang==='en'?'Completed':'Đã hoàn thành'):(currentLang==='en'?'Not completed':'Chưa hoàn thành');
-    $('#skillProgressLabel')?.replaceChildren(document.createTextNode((currentLang==='en'?'Progress: ':'Tiến độ: ')+($('#skillProgressBar')?.dataset.pct||'0%')));
-    $('#skillProgressCount')?.replaceChildren(document.createTextNode($('#skillProgressCount')?.dataset.count||'0/30'));
   }
   function applyLanguage(lang,animate=true){
     currentLang=lang==='en'?'en':'vi'; store.set('cx-lang',currentLang); html.lang=currentLang;
@@ -1623,13 +1945,10 @@ const EN={
       $('#mobileMenu')?.setAttribute('aria-label',currentLang==='en'?'Mobile navigation':'Điều hướng trên thiết bị di động');
       $('#mobileMenuBtn')?.setAttribute('aria-label',currentLang==='en'?'Open menu':'Mở menu');
       $('#mobileClose')?.setAttribute('aria-label',currentLang==='en'?'Close menu':'Đóng menu');
-      renderLevel(); buildSkillChecklists(); renderQuestion(); applyHero(heroProgress); updateQuizProgressMeta(); refreshTodoUI(); updateDynamicLabels(); updateNavMorphIndicator();
+      renderLevel(); buildSkillChecklists(); renderSkillActionBoard(); renderQuestion(); applyHero(heroCur); updateQuizProgressMeta(); refreshSkillChecklists(); updateNavMorphIndicator();
       const pageTitle=$('#pageTitle'); if(pageTitle) pageTitle.textContent=currentLang==='en'?'Internet Safety & Fake News Recognition – TH&THCS Cao Xanh':'Cẩm nang An toàn mạng & Nhận diện tin giả – TH&THCS Cao Xanh';
     };
-    if(animate && !reduceNow){
-      const v=runViewTransition(mutate);
-      if(!v){body.classList.add('lang-out'); setTimeout(()=>body.classList.remove('lang-out'),120);}
-    } else mutate();
+    if(animate && !reduceNow) runViewTransition(mutate,true); else mutate();
   }
   $('#langBtn')?.addEventListener('click',()=>applyLanguage(currentLang==='vi'?'en':'vi',true));
 
@@ -1744,6 +2063,7 @@ const EN={
     }));
   }
   function drawAmbient(){
+    if(document.hidden){ambientRaf=0;return;}
     if(!ambientCtx||!ambientW)return;
     const w=innerWidth,h=innerHeight;ambientCtx.clearRect(0,0,w,h);
     for(let i=0;i<ambientNodes.length;i++){
@@ -1759,14 +2079,22 @@ const EN={
     }
     if(!reduceNow)ambientRaf=requestAnimationFrame(drawAmbient);
   }
-  function startAmbient(){if(!ambientRaf&&!reduceNow)ambientRaf=requestAnimationFrame(drawAmbient);else if(reduceNow)drawAmbient();}
+  function startAmbient(){
+    if(document.hidden) return;
+    if(!ambientRaf&&!reduceNow) ambientRaf=requestAnimationFrame(drawAmbient);
+    else if(reduceNow) drawAmbient();
+  }
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){cancelAnimationFrame(ambientRaf);ambientRaf=0;}
+    else startAmbient();
+  });
   initAmbient();startAmbient();
 
   function heroLoop(){
     heroCur += (heroTarget-heroCur)*.11;
     if(Math.abs(heroTarget-heroCur)<.0005) heroCur=heroTarget;
     applyHero(heroCur); drawCanvas();
-    if(heroCur<1 || heroTarget<1) raf=requestAnimationFrame(heroLoop); else raf=0;
+    if(Math.abs(heroTarget-heroCur)>.0005) raf=requestAnimationFrame(heroLoop); else raf=0;
   }
   function startHeroLoop(){if(!raf&&!reduceNow)raf=requestAnimationFrame(heroLoop);}
   initCanvas(); applyHero(0);
@@ -1802,17 +2130,29 @@ const EN={
   }
 
   /* ---------- Expandable cards ---------- */
+  function initExpandableA11y(){
+    $$('.expandable-card').forEach((card,i)=>{
+      const panel=$('.exp-body',card);
+      if(!panel) return;
+      const id=panel.id||`skill-detail-panel-${i+1}`;
+      panel.id=id;
+      card.setAttribute('aria-controls',id);
+      card.setAttribute('aria-expanded',String(card.classList.contains('expanded')));
+    });
+  }
   function toggleCard(card){
     const open=!card.classList.contains('expanded');
     card.classList.toggle('expanded',open); card.setAttribute('aria-expanded',String(open));
     if(open) card.scrollIntoView({block:'nearest',behavior:reduceNow?'auto':'smooth'});
   }
-  document.addEventListener('click',e=>{
-    const card=e.target.closest('.expandable-card'); if(!card) return;
-    if(e.target.closest('input,label,button,a,select,textarea,summary,.exp-inner')) return;
+  initExpandableA11y();
+  document.addEventListener('keydown',e=>{
+    if(e.defaultPrevented || !['Enter',' '].includes(e.key)) return;
+    const card=e.target.closest?.('.expandable-card');
+    if(!card || e.target.closest('button,a,input,select,textarea,summary,[contenteditable="true"]')) return;
+    e.preventDefault();
     toggleCard(card);
   });
-  document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.expandable-card')){e.preventDefault();toggleCard(e.target);}});
 
   /* ---------- Scroll reveal with hierarchy ---------- */
   const reveals=$$('.reveal');
@@ -1840,32 +2180,41 @@ const EN={
   function updateScrollSpy(){
     const pivot=scrollY+innerHeight*.30; let activeId='tong-quan';
     const sections=Array.from(document.querySelectorAll('main section[id]'));
-    sections.forEach(sec=>{if(sec.offsetTop<=pivot)activeId=sec.id;});
+    sections.forEach(sec=>{const top=sec.getBoundingClientRect().top+scrollY;if(top<=pivot)activeId=sec.id;});
     navItems.forEach(item=>item.classList.toggle('is-active',item.dataset.sectionTarget===activeId));
     $$('.mobile-nav-link').forEach(item=>item.classList.toggle('is-active',item.dataset.sectionTarget===activeId));
   }
   navItems.forEach(item=>{item.addEventListener('mouseenter',()=>moveNavIndicator(item));item.addEventListener('mouseleave',updateNavMorphIndicator);});
-  document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a)return;const id=a.getAttribute('href');const target=document.querySelector(id);if(target){e.preventDefault();target.scrollIntoView({behavior:reduceNow?'auto':'smooth',block:'start'});}});
-
   /* ---------- Dropdown touch + mobile drawer ---------- */
   const mobileMenu=$('#mobileMenu'),mobileBtn=$('#mobileMenuBtn'),mobileClose=$('#mobileClose');
   const dropdownItems=$$('.nav-item.has-dropdown');
+  document.addEventListener('click',e=>{
+    const returnBtn=e.target.closest('[data-return-checklist]');
+    if(returnBtn){
+      const card=returnBtn.closest('.detailed-safety-card');
+      card?.classList.remove('expanded');
+      document.getElementById('skill-checklist')?.scrollIntoView({behavior:reduceNow?'auto':'smooth',block:'start'});
+      return;
+    }
+    const card=e.target.closest('.expandable-card');
+    if(card && !e.target.closest('input,label,button,a,select,textarea,summary,.exp-inner')){toggleCard(card);return;}
+    const anchor=e.target.closest('a[href^="#"]');
+    if(anchor){const id=anchor.getAttribute('href'),target=id?document.querySelector(id):null;if(target){e.preventDefault();target.scrollIntoView({behavior:reduceNow?'auto':'smooth',block:'start'});}}
+    if(!e.target.closest('.nav-item.has-dropdown')) closeDropdowns();
+  });
   function closeDropdowns(except=null){
-    dropdownItems.forEach(item=>{if(item!==except){item.classList.remove('dropdown-open');item.setAttribute('aria-expanded','false');item.querySelector('.nav-trigger')?.setAttribute('aria-expanded','false');}});
+    dropdownItems.forEach(item=>{if(item!==except){item.classList.remove('dropdown-open');item.querySelector('.nav-trigger')?.setAttribute('aria-expanded','false');}});
   }
   function toggleDropdown(item){
-    const open=!item.classList.contains('dropdown-open'); closeDropdowns(item); item.classList.toggle('dropdown-open',open); item.setAttribute('aria-expanded',String(open)); item.querySelector('.nav-trigger')?.setAttribute('aria-expanded',String(open));
+    const open=!item.classList.contains('dropdown-open'); closeDropdowns(item); item.classList.toggle('dropdown-open',open); item.querySelector('.nav-trigger')?.setAttribute('aria-expanded',String(open));
   }
   dropdownItems.forEach(item=>{
     const trigger=item.querySelector('.nav-trigger');
     trigger?.addEventListener('click',e=>{e.stopPropagation();toggleDropdown(item);});
-    item.addEventListener('keydown',e=>{
-      if((e.key==='Enter'||e.key===' '||e.key==='ArrowDown') && e.target===item){e.preventDefault();toggleDropdown(item);}
+    trigger?.addEventListener('keydown',e=>{
+      if(e.key==='ArrowDown'){e.preventDefault();toggleDropdown(item);}
       if(e.key==='Escape'){closeDropdowns();trigger?.focus();}
     });
-  });
-  document.addEventListener('click',e=>{
-    if(!e.target.closest('.nav-item.has-dropdown')) closeDropdowns();
   });
   function setMobile(open){
     if(!mobileMenu||!mobileBtn)return;
@@ -1894,36 +2243,43 @@ const EN={
   verifyInputs.forEach(i=>{i.addEventListener('change',saveVerify);i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();i.checked=!i.checked;i.dispatchEvent(new Event('change',{bubbles:true}));}});});
   $('#resetChecklist')?.addEventListener('click',()=>{verifyInputs.forEach(i=>i.checked=false);saveVerify();}); saveVerify();
 
-  /* ---------- Safety skill checklist: 6x5 persistent = overall Progress ---------- */
-  const skillBoxes=[];
+  /* ---------- Safety skill checklists: persistent 12x5 ---------- */
   const todoKey=(s,i)=>`cx-todo-${s}-${i}`;
-  function refreshTodoUI(){
-    let total=0,done=0;
+  function refreshSkillChecklists(){
     $$('.skill-checklist[data-skill]').forEach(box=>{
-      const s=Number(box.dataset.skill); const items=SKILL_DATA[s]?.[currentLang==='en'?'items_en':'items_vi']||[]; const count=items.length;
-      const d=items.filter((_,i)=>store.get(todoKey(s,i))==='1').length; done+=d; total+=count;
-      const counter=box.parentElement.querySelector('.skill-check-count span'); if(counter)counter.textContent=d;
+      const s=Number(box.dataset.skill);
+      const items=SKILL_DATA[s]?.[currentLang==='en'?'items_en':'items_vi']||[];
+      const done=items.filter((_,i)=>store.get(todoKey(s,i))==='1').length;
+      const counter=box.parentElement.querySelector('.skill-check-count span');
+      if(counter) counter.textContent=done;
     });
-    const pct=total?Math.round(done/total*100):0;
-    $('#skillProgressBar')?.style.setProperty('width',pct+'%'); $('#skillProgressBar')?.setAttribute('data-pct',pct+'%');
-    const label=$('#skillProgressLabel'),count=$('#skillProgressCount');
-    if(label)label.textContent=(currentLang==='en'?'Progress: ':'Tiến độ: ')+pct+'%'; if(count)count.textContent=`${done}/${total}`;
-    if(label) label.dataset.pct=pct+'%'; if(count) count.dataset.count=`${done}/${total}`;
+    refreshSkillBoardState();
   }
   function buildSkillChecklists(){
     $$('.skill-checklist[data-skill]').forEach(box=>{
-      const s=Number(box.dataset.skill); box.innerHTML=''; const items=SKILL_DATA[s][currentLang==='en'?'items_en':'items_vi'];
-      items.forEach((text,i)=>{
+      const s=Number(box.dataset.skill); if(!SKILL_DATA[s]) return;
+      box.innerHTML='';
+      const items=SKILL_DATA[s][currentLang==='en'?'items_en':'items_vi'];
+      items.forEach((itemText,i)=>{
         const label=document.createElement('label');label.className='skill-check-item';
         const input=document.createElement('input');input.type='checkbox';input.checked=store.get(todoKey(s,i))==='1';
-        input.addEventListener('change',()=>{input.checked?store.set(todoKey(s,i),'1'):store.del(todoKey(s,i));refreshTodoUI();});
-        const span=document.createElement('span');span.textContent=text;label.append(input,span);box.append(label);
+        input.addEventListener('change',()=>{input.checked?store.set(todoKey(s,i),'1'):store.del(todoKey(s,i));refreshSkillChecklists();});
+        const span=document.createElement('span');span.textContent=itemText;label.append(input,span);box.append(label);
       });
-    }); refreshTodoUI();
+    });
   }
 
+  $('#skillBoardReset')?.addEventListener('click',()=>{
+    for(let s=0;s<SKILL_DATA.length;s++) SKILL_DATA[s].vi.forEach((_,i)=>store.del(todoKey(s,i)));
+    $$('.skill-checklist input[type="checkbox"]').forEach(i=>i.checked=false);
+    $$('.skill-board-check').forEach(i=>{i.checked=false;i.indeterminate=false;});
+    refreshSkillChecklists();
+  });
+
+  /* ---------- Return from a skill card to the checklist ---------- */
   /* ---------- School-level checklist + FLIP-like panel continuity ---------- */
   const seg=$('#levelSeg'),segThumb=$('.seg-thumb',seg),segBtns=$$('.seg-btn',seg),levelList=$('#levelList'),ringFg=$('#ringFg'),ringText=$('#ringText');
+
   const ringC=2*Math.PI*52; let activeLevel=store.get('cx-level')==='thcs'?'thcs':'tieuhoc';
   function moveSeg(){const b=$('.seg-btn.active',seg);if(!b)return;segThumb.style.width=b.offsetWidth+'px';segThumb.style.transform=`translateX(${b.offsetLeft}px)`;}
   function updateRing(){const items=LEVELS[activeLevel][currentLang==='en'?'en':'vi'];const done=items.filter((_,i)=>store.get(`cx-level-${activeLevel}-${i}`)==='1').length;ringFg.style.strokeDashoffset=ringC*(1-done/items.length);ringText.textContent=`${done}/${items.length}`;}
@@ -1939,7 +2295,7 @@ const EN={
     });updateRing();};
     flip(levelList,mutate,560);
   }
-  function setActiveLevel(){segBtns.forEach(b=>{const on=b.dataset.level===activeLevel;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});moveSeg();}
+  function setActiveLevel(){segBtns.forEach(b=>{const on=b.dataset.level===activeLevel;b.classList.toggle('active',on);b.setAttribute('aria-selected',String(on));});const panel=$('#levelList');if(panel)panel.setAttribute('aria-labelledby',activeLevel==='thcs'?'levelTabLower':'levelTabPrimary');moveSeg();}
   segBtns.forEach(b=>b.addEventListener('click',()=>{activeLevel=b.dataset.level;store.set('cx-level',activeLevel);setActiveLevel();renderLevel();}));
   $('#levelReset')?.addEventListener('click',()=>{LEVELS[activeLevel].vi.forEach((_,i)=>store.del(`cx-level-${activeLevel}-${i}`));renderLevel();});
 
@@ -1963,7 +2319,7 @@ const EN={
   const qState={current:0,score:0,answered:false,selected:null};
   const quizWrap=$('#quiz-cards-wrapper'),qCurrent=$('#q-current'),qScore=$('#q-score'),quizBar=$('#quizBar'),quizResult=$('#quiz-result'),finalScore=$('#final-score-text'),finalMessage=$('#final-message');
   const quizData=()=>QUIZ[currentLang];
-  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function updateQuizBar(){const pct=((qState.current+(qState.answered?1:0))/5)*100;quizBar.style.width=Math.min(100,pct)+'%';}
   function updateQuizProgressMeta(){const best=store.get('cx-quiz-best'),done=store.get('cx-quiz-completed')==='1';const bestEl=$('#quizBestText'),status=$('#quizStatusText');if(bestEl)bestEl.textContent=(currentLang==='en'?'Best: ':'Kỷ lục: ')+(best?best+'/5':'—');if(status)status.textContent=done?(currentLang==='en'?'Completed':'Đã hoàn thành'):(currentLang==='en'?'Not completed':'Chưa hoàn thành');}
   function renderQuestion(){
@@ -1984,10 +2340,10 @@ const EN={
 
   /* ---------- Resize ---------- */
   window.addEventListener('resize',()=>{if(innerWidth!==lastW){initCanvas();initAmbient();}moveSeg();updateNavMorphIndicator();updateScrollSpy();});
-  if(document.fonts?.ready)document.fonts.ready.then(()=>{moveSeg();updateNavMorphIndicator();});
+  if(document.fonts?.ready)document.fonts.ready.then(()=>{moveSeg();updateNavMorphIndicator();}).catch(()=>{});
 
   // Final initialization
-  setActiveLevel(); renderLevel(); buildSkillChecklists(); initQuiz(); applyLanguage(currentLang,false); updateScroll(); moveSeg(); updateNavMorphIndicator();
+  setActiveLevel(); applyLanguage(currentLang,false); updateScroll(); moveSeg(); updateNavMorphIndicator();
 })();
 </script>
 </body>

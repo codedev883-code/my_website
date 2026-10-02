@@ -587,8 +587,6 @@ body.menu-open{overflow:hidden;}
 .skill-action-board-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:18px;}
 .skill-action-board-copy{max-width:760px}.skill-action-board-copy p{margin-top:8px;color:var(--text-2);}
 .skill-action-board-note{margin-top:10px;padding:10px 12px;border-left:3px solid var(--cyan);border-radius:10px;background:var(--bg-main);color:var(--text-2);font-size:.9rem;}
-.skill-board-reset{border:1px solid var(--border);background:var(--bg-surface);color:var(--text);padding:10px 14px;border-radius:var(--r-pill);font-weight:800;transition:transform .45s var(--ease-spring),border-color .2s,background .2s,box-shadow .3s;}
-.skill-board-reset:hover{transform:translateY(-2px);border-color:var(--cyan);background:var(--bg-hover);box-shadow:0 8px 22px rgba(34,211,238,.10);}
 .skill-board-list{display:grid;gap:12px;}
 .skill-board-item{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px 18px;border:1px solid var(--border);border-radius:16px;background:var(--bg-surface);transition:transform .45s var(--ease-spring),border-color .25s,background .25s,box-shadow .35s;}
 .skill-board-item:hover{transform:translateY(-2px);border-color:var(--border-hover);box-shadow:var(--shadow);}
@@ -1781,7 +1779,6 @@ html[data-theme="light"] #ambient-canvas{opacity:.13;mix-blend-mode:multiply;}
           <p data-i18n="safety.todo.sub">Tick vào từng kỹ năng khi em đã đọc, hiểu và biết cách thực hiện. Mỗi kỹ năng có 5 việc thực hành chi tiết trong thẻ tương ứng.</p>
           <div class="skill-action-board-note" data-i18n="safety.todo.note">Mẹo: có thể mở thẻ kỹ năng để xem hướng dẫn chi tiết, sau đó quay lại checklist bằng nút “Quay về checklist”. Trạng thái checklist được lưu trên trình duyệt này.</div>
         </div>
-        <button type="button" class="skill-board-reset" id="skillBoardReset" data-i18n="safety.todo.reset">↺ Bỏ tick toàn bộ</button>
       </div>
       <div class="skill-board-list" id="skillBoardList"></div>
       <div class="skill-board-sources">
@@ -2473,7 +2470,7 @@ const EN={
     'badge.safety': 'Internet safety', 'sec.safety.title': 'IV. Essential Internet Safety Skills',
     'sec.safety.sub': 'Spotting fake news is only one part of staying safe online. These skills cover accounts, privacy, cyberbullying, browsing, app permissions, social media, devices, sources, fact-checking, AI/deepfakes and legal & ethical basics. (Detailed cards are in Vietnamese.)',
     'safety.hint': 'Click each card to open the full details.', 'safety.todo.headerNote': 'The 12-skill practice checklist is directly below the skill cards. Tick and untick items as you work.', 'safety.core.title': '6 core safety skills', 'safety.core.sub': 'Each card has an explanation, examples, a tickable checklist, a real scenario and an activity.',
-    'safety.todo.label': 'PRACTICE TO-DO', 'safety.todo.title': '12 practical skills to turn knowledge into habits', 'safety.todo.sub': 'This board does not create a second scoring system. Each skill has five detailed practice tasks, so this board tracks 60 tasks across 12 skills.', 'safety.todo.note': 'Tip: work on one skill at a time. You do not need to finish everything in one session; what matters is that after checking a task, you actually know what to do in a similar situation.', 'safety.todo.reset': '↺ Clear all Section IV tasks', 'safety.todo.sources': 'References used to build the practice tasks:', 'safety.todo.originality': 'The wording on this board is independently written and synthesized by the project; the links are provided for verification and are not copied verbatim.' ,
+    'safety.todo.label': 'PRACTICE TO-DO', 'safety.todo.title': '12 practical skills to turn knowledge into habits', 'safety.todo.sub': 'This board does not create a second scoring system. Each skill has five detailed practice tasks, so this board tracks 60 tasks across 12 skills.', 'safety.todo.note': 'Tip: work on one skill at a time. You do not need to finish everything in one session; what matters is that after checking a task, you actually know what to do in a similar situation.', 'safety.todo.sources': 'References used to build the practice tasks:', 'safety.todo.originality': 'The wording on this board is independently written and synthesized by the project; the links are provided for verification and are not copied verbatim.' ,
     'safety.ext.title': '6 extended topics', 'safety.ext.sub': 'Topics 7–12 add depth for study and presentations.',
    
     'badge.media': 'AI & Media', 'sec.media.title': 'V. Photos, videos and AI-generated or edited content', 'sec.media.sub': 'Something that looks very real is not necessarily real.',
@@ -2969,13 +2966,6 @@ const EN={
       });
     });
   }
-
-  $('#skillBoardReset')?.addEventListener('click',()=>{
-    for(let s=0;s<SKILL_DATA.length;s++) SKILL_DATA[s].vi.forEach((_,i)=>store.del(todoKey(s,i)));
-    $$('.skill-checklist input[type="checkbox"]').forEach(i=>i.checked=false);
-    $$('.skill-board-check').forEach(i=>{i.checked=false;i.indeterminate=false;});
-    refreshSkillChecklists();
-  });
 
   /* ---------- Return from a skill card to the checklist ---------- */
   /* ---------- School-level checklist + FLIP-like panel continuity ---------- */
